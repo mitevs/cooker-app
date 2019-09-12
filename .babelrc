@@ -1,0 +1,39 @@
+{
+    "presets": [
+        "@babel/react",
+        "@babel/preset-typescript"
+    ],
+    "plugins": [
+        [
+            "module-resolver",
+            {
+                "alias": {
+                    "@shared": "./src/shared",
+                    "@client": "./src/client",
+                    "@server": "./src/server"
+                }
+            }
+        ]
+    ],
+    "env": {
+        "client": {
+            "presets": [
+                [
+                    "@babel/preset-env",
+                    {
+                        "modules": false
+                    }
+                ]
+            ]
+        },
+        "server": {
+            "presets": [
+                ["@babel/preset-env", {
+                    "targets": {
+                        "node": "current"
+                    }
+                }]
+            ]
+        }
+    }
+}
