@@ -11,11 +11,11 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 
-export default () => {
-    return <Fragment>
+export default () => (
+    <Fragment>
         <GlobalStyle />
         <Switch>
             {renderRoutes(routes)}
         </Switch>
     </Fragment>
-};
+);

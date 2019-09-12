@@ -10,8 +10,10 @@ interface AppProps {
     ctx: Context
 };
 
-export default ({ ctx }: AppProps) => <StaticRouter location={ctx.request.url} context={ctx}>
-    <ApolloProvider client={client}>
-        <App></App>
-    </ApolloProvider>
-</StaticRouter>;
+export default ({ ctx }: AppProps) => (
+    <StaticRouter location={ctx.request.url} context={ctx}>
+        <ApolloProvider client={client}>
+            <App></App>
+        </ApolloProvider>
+    </StaticRouter>
+);
