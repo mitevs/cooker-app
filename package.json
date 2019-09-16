@@ -2,12 +2,13 @@
   "name": "cooker-app",
   "version": "1.0.0",
   "scripts": {
-    "start": "cross-env BABEL_ENV=server npx nodemon --exec babel-node src/server/app.tsx --extensions \".ts,.tsx\"",
-    "serve": "node dist/server.js",
-    "build": "npx yarn build:client && npx yarn build:server && npx yarn statics",
-    "build:client": "cross-env BABEL_ENV=client npx webpack --config src/client/webpack.config.js",
-    "build:server": "cross-env BABEL_ENV=server npx webpack --config src/server/webpack.config.js",
-    "statics": "npx gulp statics"
+    "start": "node dist/server",
+    "build": "npm-run-all --parallel build:client build:server",
+    "build:client": "cross-env BABEL_ENV=client NODE_ENV=production npx webpack --config src/client/webpack.config.js",
+    "build:server": "cross-env BABEL_ENV=server NODE_ENV=production npx webpack --config src/server/webpack.config.js",
+    "dev:client": "cross-env BABEL_ENV=client npx webpack-dev-server --config src/client/webpack.config.js",
+    "dev:server": "cross-env BABEL_ENV=server npx webpack --watch --config src/server/webpack.config.js",
+    "dev": "cross-env NODE_ENV=development HMR=true npm-run-all --parallel dev:server dev:client"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",
@@ -26,16 +27,18 @@
     "@types/react-router-config": "^5.0.0",
     "@types/react-router-dom": "^4.3.5",
     "@types/styled-components": "^4.1.19",
+    "@types/webpack-env": "^1.14.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-module-resolver": "^3.2.0",
     "cross-env": "^5.2.1",
     "gulp": "^4.0.2",
-    "nodemon": "^1.19.2",
-    "source-map-loader": "^0.2.4",
-    "ts-loader": "^6.0.4",
+    "html-webpack-plugin": "^3.2.0",
+    "npm-run-all": "^4.1.5",
+    "start-server-webpack-plugin": "^2.2.5",
     "typescript": "^3.6.2",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.8",
+    "webpack-dev-server": "^3.8.0",
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {

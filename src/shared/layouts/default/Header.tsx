@@ -26,6 +26,7 @@ const Header = () => (
     <StyledHeader>
         <div className="header-inner">
             <Nav>
+                <NavLink to="/register">register</NavLink>
                 <NavLink to="/login">login</NavLink>
             </Nav>
         </div>
