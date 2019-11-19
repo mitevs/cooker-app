@@ -1,52 +1,43 @@
 import Koa from 'koa';
-import Router from 'koa-router';
+import htmlMinify from 'koa-html-minifier';
+import bodyParser from 'koa-bodyparser';
 import serve from 'koa-static';
 import mount from 'koa-mount';
+import render from 'koa-ejs';
 import { join } from 'path';
-import React from 'react';
-import { renderToString } from 'react-dom/server';
-import client from './graphql/client';
-import App from './App';
-import { ServerStyleSheet } from 'styled-components';
+import routes from './routes';
+import session from 'koa-session';
+import pino from 'koa-pino-logger';
 
 const app = new Koa();
-const router = new Router();
 
-router.get('/test', ctx => {
-   ctx.body = 'Hello Test Route';
+app.keys = ['e1234123'];
+
+app.use(bodyParser());
+app.use(session(app));
+app.use(pino({
+   enabled: true,
+   prettyPrint: true,
+   level: 'debug'
+}));
+
+// locals
+app.use(async (ctx, next) => {
+   ctx.state.APP_CONFIG = APP_CONFIG;
+   ctx.state.user = ctx.session.user;
+   await next();
+})
+
+render(app, {
+   root: join(__dirname, 'views'),
+   // debug: true,
+   layout: false,
+   viewExt: 'ejs',
+   cache: false
 });
 
-router.get('*', async ctx => {
-   const sheet = new ServerStyleSheet();
-   const reactStr = renderToString(sheet.collectStyles(<App ctx={ctx}></App>));
-
-   try {
-      ctx.body = `
-      <!DOCTYPE html>
-         <html lang="en">
-         <head>
-            <meta charset="UTF-8">
-            <title>React SSR</title>
-            ${sheet.getStyleTags()}
-         </head>
-         <body>
-            <div id="app">${reactStr}</div>
-            <script>window.__APP_STATE__=${JSON.stringify(client.extract())}</script>
-            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/16.9.0/umd/react.production.min.js"></script>
-            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.8.6/umd/react-dom.production.min.js"></script>
-            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/5.0.1/react-router-dom.min.js"></script>
-            <script type="text/javascript" src="${APP_CONFIG.cdnUrl}/client.js"></script>
-         </body>
-      </html>
-      `;
-
-      sheet.seal();
-   } catch (err) {
-      ctx.body = err.toString();
-   }
-});
-
+app.use(htmlMinify());
 app.use(mount('/public', serve(join(__dirname, '/public'))));
-app.use(router.routes());
+routes.forEach(router => app.use(router.routes()));
 
 export default app;

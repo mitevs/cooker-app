@@ -8,8 +8,6 @@ const isHmrEnabled = process.env.HMR === 'true';
 // load based on env or env var
 const appConfig = require('../../config/local.json');
 
-console.log('CONFIG ', appConfig);
-
 let config = {
     target: 'web',
     mode: env,
@@ -26,6 +24,10 @@ let config = {
             {
                 test: /\.tsx?$/,
                 loader: 'babel-loader'
+            },
+            {
+                test: /\.svg$/,
+                use: ['@svgr/webpack']
             }
         ]
     },
@@ -33,22 +35,30 @@ let config = {
         extensions: ['.ts', '.tsx', '.js', '.json', '.sass']
     },
     externals: {
-        'react': 'React',
-        'react-dom': 'ReactDOM',
-        'react-router': 'ReactRouterDOM'
+        // 'react': 'React',
+        // 'react-dom': 'ReactDOM',
+        // 'react-router': 'ReactRouterDOM',
+        // 'react-router-dom': 'ReactRouterDOM'
     },
     plugins: [
         new webpack.DefinePlugin({
-            APP_CONFIG: JSON.stringify(appConfig)
+            APP_CONFIG: JSON.stringify(appConfig),
+            IS_SERVER: false
         })
     ]
 }
 
-if (env === 'development' && isHmrEnabled) {
+if (env === 'development') {
     config = {
         ...config,
         devtool: 'inline-source-map',
-        devServer: {
+        plugins: [
+            ...config.plugins,
+        ]
+    }
+
+    if (isHmrEnabled) {
+        config.devServer = {
             hot: true,
             publicPath: '/',
             historyApiFallback: true,
@@ -58,16 +68,16 @@ if (env === 'development' && isHmrEnabled) {
                 "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
                 "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
             }
-        },
-        plugins: [
-            new webpack.NamedModulesPlugin(),
-            new webpack.HotModuleReplacementPlugin(),
+        };
+
+        config.plugins.push(...[
             new HtmlWebpackPlugin({
                 filename: 'index.html',
-                template: path.join(__dirname, '../views/index.dev.ejs')
+                template: path.join(__dirname, '../server/views/index.dev.ejs')
             }),
-            ...config.plugins,
-        ]
+            new webpack.NamedModulesPlugin(),
+            new webpack.HotModuleReplacementPlugin(),
+        ])
     }
 }
 

@@ -1,6 +1,6 @@
-declare module "*.json" {
-    const value: any;
-    export default value;
+declare interface AppContext {
+    user?: User
+    setUser: (user: User) => void
 }
 
 declare interface AppConfig {
@@ -8,3 +8,5 @@ declare interface AppConfig {
 }
 
 declare const APP_CONFIG: AppConfig;
+
+declare const IS_SERVER: boolean;

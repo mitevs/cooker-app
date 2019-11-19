@@ -1,15 +1,13 @@
-import { gql } from "apollo-boost";
+import { gql } from 'apollo-boost';
 
-export const ingredients = () => {
-    return gql`
-      {
-         ingredients {
-            id
-            createdOn
-            modifiedOn
-            name
-            baseUnit
-         }
-      }
-    `;
-};
+export const INGREDIENTS = gql`
+{
+  ingredients {
+    id
+    createdOn
+    modifiedOn
+    name
+    baseUnit
+  }
+}
+`

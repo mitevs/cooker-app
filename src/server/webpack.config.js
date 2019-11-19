@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const StartServerPlugin = require('start-server-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const env = process.env.NODE_ENV || 'development';
 const isHmrEnabled = process.env.HMR;
@@ -24,6 +25,10 @@ let config = {
             {
                 test: /\.tsx?$/,
                 loader: 'babel-loader'
+            },
+            {
+                test: /\.svg$/,
+                use: ['@svgr/webpack']
             }
         ]
     },
@@ -37,8 +42,17 @@ let config = {
     externals: [nodeExternals()],
     plugins: [
         new webpack.DefinePlugin({
-            APP_CONFIG: JSON.stringify(appConfig)
-        })
+            APP_CONFIG: JSON.stringify(appConfig),
+            IS_SERVER: true
+        }),
+        new CopyPlugin([
+            {
+                from: path.resolve(__dirname, './views/**/*'),
+                to: path.resolve(__dirname, '../../dist/views/[name].[ext]'),
+                toType: 'template',
+                force: true
+            }
+        ])
     ]
 }
 
@@ -51,11 +65,11 @@ if (env === 'development' && isHmrEnabled) {
         })],
         plugins: [
             ...config.plugins,
+            new webpack.HotModuleReplacementPlugin(),
+            new webpack.NamedModulesPlugin(),
             new StartServerPlugin({
                 name: 'server.js'
-            }),
-            new webpack.HotModuleReplacementPlugin(),
-            new webpack.NamedModulesPlugin()
+            })
         ]
     }
 }

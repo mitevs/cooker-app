@@ -7,7 +7,7 @@ import App from '@shared/App';
 export default () => (
     <BrowserRouter>
         <ApolloProvider client={client}>
-            <App></App>
+            <App ctx={{ user: window.APP.USER }}></App>
         </ApolloProvider>
     </BrowserRouter>
 );

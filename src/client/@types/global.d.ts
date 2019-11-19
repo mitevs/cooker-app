@@ -1,3 +1,6 @@
 declare interface Window {
-    __APP_STATE__: any
+    APP: {
+        USER: User,
+        STATE: any
+    }
 }

@@ -13,7 +13,7 @@ interface AppProps {
 export default ({ ctx }: AppProps) => (
     <StaticRouter location={ctx.request.url} context={ctx}>
         <ApolloProvider client={client}>
-            <App></App>
+            <App ctx={{ user: ctx.state.user }}></App>
         </ApolloProvider>
     </StaticRouter>
 );
