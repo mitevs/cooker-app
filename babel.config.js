@@ -33,8 +33,7 @@ const serverPresets = [
         {
             targets: {
                 node: "current"
-            },
-            debug: true
+            }
         }
     ]
 ];

@@ -1,10 +1,6 @@
-import React from 'react';
+import { Suspense, lazy } from 'react';
 import Loadable from 'react-loadable';
-
-// Craete separate component for Loading screen
-const Loading: React.FC = () => (
-    <div>Loading...</div>
-);
+import Loading from '@shared/components/pages/Loading';
 
 export default [
     {
@@ -33,27 +29,6 @@ export default [
         path: '/register',
         component: Loadable({
             loader: () => import('@shared/components/pages/Register'),
-            loading: Loading
-        })
-    },
-    {
-        path: '/recipes',
-        component: Loadable({
-            loader: () => import('@shared/components/pages/Recipes'),
-            loading: Loading
-        })
-    },
-    {
-        path: '/recipe/:id',
-        component: Loadable({
-            loader: () => import('@shared/components/pages/Recipe'),
-            loading: Loading
-        })
-    },
-    {
-        path: '/new-recipe',
-        component: Loadable({
-            loader: () => import('@shared/components/pages/NewRecipe'),
             loading: Loading
         })
     }

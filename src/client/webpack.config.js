@@ -34,6 +34,11 @@ let config = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.json', '.sass']
     },
+    optimization: {
+        splitChunks: {
+            chunks: 'all'
+        }
+    },
     externals: {
         // 'react': 'React',
         // 'react-dom': 'ReactDOM',
