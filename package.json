@@ -11,7 +11,8 @@
     "dev:server": "cross-env BABEL_ENV=server NODE_ENV=development HMR=true npx webpack --watch --config src/server/webpack.config.js",
     "dev": "cross-env NODE_ENV=development HMR=true npm-run-all --parallel dev:server dev:client",
     "analyse": "source-map-explorer dist/public/*.js",
-    "sb": "start-storybook -p 9001 -c config/storybook"
+    "sb": "start-storybook -p 9001 -c config/storybook",
+    "release": "npx standard-version"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",
@@ -54,6 +55,7 @@
     "react-docgen-typescript-loader": "^3.3.0",
     "react-docgen-typescript-webpack-plugin": "^1.1.0",
     "source-map-explorer": "^2.0.1",
+    "standard-version": "^7.0.1",
     "start-server-webpack-plugin": "^2.2.5",
     "styled-components-modifiers": "^1.2.5",
     "typescript": "^3.6.2",

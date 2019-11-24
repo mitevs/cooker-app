@@ -1,0 +1,41 @@
+box: node
+
+build:
+    steps:
+        - michaellouieloria/bitbucket-build-status@0.0.6:
+            username: $BITBUCKET_API_USER
+            password: $BITBUCKET_API_KEY
+        - script:
+            name: install yarn
+            code: npm install -g yarn
+        - script:
+            name: install dependencies
+            code: yarn
+        - script:
+            name: build
+            code: yarn build
+
+    after-steps:
+        - michaellouieloria/bitbucket-build-status@0.0.6:
+            username: $BITBUCKET_API_USER
+            password: $BITBUCKET_API_KEY
+
+release:
+    steps:
+        - michaellouieloria/bitbucket-build-status@0.0.6:
+            username: $BITBUCKET_API_USER
+            password: $BITBUCKET_API_KEY
+        - script:
+            name: install yarn
+            code: npm install -g yarn
+        - script:
+            name: install dependencies
+            code: yarn
+        - script:
+            name: build
+            code: yarn build
+
+    after-steps:
+        - michaellouieloria/bitbucket-build-status@0.0.6:
+            username: $BITBUCKET_API_USER
+            password: $BITBUCKET_API_KEY
