@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const StyledDiv = styled.div`
-    display: flex;
+  display: flex;
 `
 
-export default StyledDiv;
+export default StyledDiv

@@ -1,83 +1,91 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { Redirect } from 'react-router';
-import { useMutation } from '@apollo/react-hooks';
-import { CREATE_USER } from '@shared/graphql/mutations/users';
-import Button from '@shared/components/atoms/Button';
-import FormControl from '@shared/components/molecules/FormControl';
+import React, { useState, ChangeEvent, FormEvent } from 'react'
+import { Redirect } from 'react-router'
+import { useMutation } from '@apollo/react-hooks'
+import { CREATE_USER } from '@shared/graphql/mutations/users'
+import Button from '@shared/components/atoms/Button'
+import FormControl from '@shared/components/molecules/FormControl'
 
 const RegisterForm = () => {
-    const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [shouldRedirect, setShouldRedirect] = useState(false)
 
-    const [user, setUser] = useState({
-        username: '',
-        password: '',
-        email: ''
-    });
+  const [user, setUser] = useState({
+    username: '',
+    password: '',
+    email: '',
+  })
 
-    const [errors, setError] = useState({
-        username: '',
-        password: '',
-        email: ''
-    });
+  const [errors, setError] = useState({
+    username: '',
+    password: '',
+    email: '',
+  })
 
-    const [createUser] = useMutation(CREATE_USER);
+  const [createUser] = useMutation(CREATE_USER)
 
-    const isValidForm = () => {
-        return user.email && user.password && user.username;
-    }
+  const isValidForm = () => {
+    return user.email && user.password && user.username
+  }
 
-    const validateField = (name: string, value: string) => {
-        if (!value) {
-            setError(prev => ({ ...prev, [name]: 'Required' }));
-        } else {
-            setError(prev => ({ ...prev, [name]: '' }));
-        }
-    }
-
-    const onSubmit = async (e: FormEvent) => {
-        e.preventDefault();
-
-        try {
-            await createUser({variables: { ...user }});
-            setShouldRedirect(true);
-        } catch (err) {
-            console.log('err ', err);
-        }
-    };
-
-    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        validateField(name, value);
-        setUser(prev => ({ ...prev, [name]: value }));
-    };
-
-    if (shouldRedirect) {
-        return <Redirect to="/login" />;
+  const validateField = (name: string, value: string) => {
+    if (!value) {
+      setError((prev) => ({ ...prev, [name]: 'Required' }))
     } else {
-        return <form onSubmit={onSubmit} noValidate>
-            <FormControl label="Username"
-                name="username"
-                error={errors.email}
-                onChange={onChange}
-                value={user.username} />
-
-            <FormControl label="Email"
-                name="email"
-                type="email"
-                error={errors.email}
-                onChange={onChange}
-                value={user.email} />
-
-            <FormControl label="Password"
-                name="password"
-                type="password"
-                error={errors.password}
-                onChange={onChange}
-                value={user.password} />
-
-            <Button disabled={!isValidForm()}>Register</Button>
-        </form>
+      setError((prev) => ({ ...prev, [name]: '' }))
     }
-};
+  }
 
-export default RegisterForm;
+  const onSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+
+    try {
+      await createUser({ variables: { ...user } })
+      setShouldRedirect(true)
+    } catch (err) {
+      console.log('err ', err)
+    }
+  }
+
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    validateField(name, value)
+    setUser((prev) => ({ ...prev, [name]: value }))
+  }
+
+  if (shouldRedirect) {
+    return <Redirect to="/login" />
+  } else {
+    return (
+      <form onSubmit={onSubmit} noValidate>
+        <FormControl
+          label="Username"
+          name="username"
+          error={errors.email}
+          onChange={onChange}
+          value={user.username}
+        />
+
+        <FormControl
+          label="Email"
+          name="email"
+          type="email"
+          error={errors.email}
+          onChange={onChange}
+          value={user.email}
+        />
+
+        <FormControl
+          label="Password"
+          name="password"
+          type="password"
+          error={errors.password}
+          onChange={onChange}
+          value={user.password}
+        />
+
+        <Button disabled={!isValidForm()}>Register</Button>
+      </form>
+    )
+  }
+}
+
+export default RegisterForm

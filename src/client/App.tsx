@@ -1,13 +1,13 @@
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { ApolloProvider } from '@apollo/react-hooks';
-import client from './graphql/client';
-import App from '@shared/App';
+import React from 'react'
+import { BrowserRouter } from 'react-router-dom'
+import { ApolloProvider } from '@apollo/react-hooks'
+import client from './graphql/client'
+import App from '@shared/App'
 
 export default () => (
-    <BrowserRouter>
-        <ApolloProvider client={client}>
-            <App ctx={{ user: window.APP.USER }}></App>
-        </ApolloProvider>
-    </BrowserRouter>
-);
+  <BrowserRouter>
+    <ApolloProvider client={client}>
+      <App ctx={{ user: window.APP.USER }}></App>
+    </ApolloProvider>
+  </BrowserRouter>
+)

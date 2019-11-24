@@ -1,9 +1,9 @@
-import InputGroup from './InputGroup';
-import Label from './Label';
-import Input from './Input';
+import InputGroup from './InputGroup'
+import Label from './Label'
+import Input from './Input'
 
 export default {
-    InputGroup,
-    Label,
-    Input
-};
+  InputGroup,
+  Label,
+  Input,
+}

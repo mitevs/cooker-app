@@ -1,9 +1,5 @@
-import React from 'react';
+import React from 'react'
 
-const Footer = () => (
-    <footer>
-        footer
-    </footer>
-);
+const Footer = () => <footer>footer</footer>
 
-export default Footer;
+export default Footer

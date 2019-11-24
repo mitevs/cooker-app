@@ -1,6 +1,6 @@
 declare interface Window {
-    APP: {
-        USER: User,
-        STATE: any
-    }
+  APP: {
+    USER: User
+    STATE: any
+  }
 }

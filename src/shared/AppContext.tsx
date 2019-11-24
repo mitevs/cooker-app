@@ -1,3 +1,5 @@
-import React from 'react';
+import React from 'react'
 
-export default React.createContext<AppContext>({ setUser: () => false });
+export default React.createContext<AppContext>({
+  setUser: () => false,
+})
