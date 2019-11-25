@@ -9,9 +9,7 @@ interface InputGroup extends InputHTMLAttributes<HTMLInputElement> {
 const InputGroup: React.FC<InputGroup> = (props) => {
   return (
     <Styled.InputGroup modifiers={props.modifiers}>
-      <Styled.Label modifiers={props.modifiers}>
-        {props.label}
-      </Styled.Label>
+      <Styled.Label modifiers={props.modifiers}>{props.label}</Styled.Label>
       <Styled.Input {...props} modifiers={props.modifiers} />
     </Styled.InputGroup>
   )

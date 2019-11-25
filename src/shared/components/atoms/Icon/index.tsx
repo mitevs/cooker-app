@@ -20,19 +20,11 @@ const ICON_MAP = {
   [IconType.arrowDown]: ArrowDown,
 }
 
-const Icon: React.FC<IconProps> = ({
-  type,
-  modifiers,
-  onClick,
-  className,
-}) => {
+const Icon: React.FC<IconProps> = ({ type, modifiers, onClick, className }) => {
   const SvgIcon = ICON_MAP[type]
 
   return (
-    <StyledIcon
-      className={className}
-      modifiers={modifiers}
-      onClick={onClick}>
+    <StyledIcon className={className} modifiers={modifiers} onClick={onClick}>
       <SvgIcon></SvgIcon>
     </StyledIcon>
   )

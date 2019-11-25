@@ -39,18 +39,8 @@ const Login: React.FC = () => {
         <h1>Login</h1>
 
         <form onSubmit={onSubmit}>
-          <input
-            name="username"
-            type="text"
-            value={user.username}
-            onChange={onChange}
-          />
-          <input
-            name="password"
-            type="password"
-            value={user.password}
-            onChange={onChange}
-          />
+          <input name="username" type="text" value={user.username} onChange={onChange} />
+          <input name="password" type="password" value={user.password} onChange={onChange} />
           <button type="submit">Login</button>
         </form>
       </React.Fragment>
