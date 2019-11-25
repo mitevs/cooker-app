@@ -28,6 +28,14 @@
       }
     ]
   },
+  "overrides": [
+    {
+      "files": ["*.js", "*.jsx"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": 0
+      }
+    }
+  ],
   "settings": {
     "react": {
       "pragma": "React",

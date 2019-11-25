@@ -26,11 +26,7 @@ const getHeadlineLevel = (level): AnyStyledComponent => {
   }
 }
 
-const Headline: React.FC<HeadlineProps> = ({
-  level,
-  children,
-  className,
-}) => {
+const Headline: React.FC<HeadlineProps> = ({ level, children, className }) => {
   const HTag = getHeadlineLevel(level)
   return <HTag className={className}>{children}</HTag>
 }

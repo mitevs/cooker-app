@@ -68,10 +68,8 @@ if (env === 'development') {
       port: 3001,
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods':
-          'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-        'Access-Control-Allow-Headers':
-          'X-Requested-With, content-type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+        'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
       },
     }
 
@@ -79,10 +77,7 @@ if (env === 'development') {
       ...[
         new HtmlWebpackPlugin({
           filename: 'index.html',
-          template: path.join(
-            __dirname,
-            '../server/views/index.dev.ejs'
-          ),
+          template: path.join(__dirname, '../server/views/index.dev.ejs'),
         }),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),

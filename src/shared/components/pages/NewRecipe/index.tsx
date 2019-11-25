@@ -1,9 +1,4 @@
-import React, {
-  useState,
-  useContext,
-  FormEvent,
-  ChangeEvent,
-} from 'react'
+import React, { useState, useContext, FormEvent, ChangeEvent } from 'react'
 import { Redirect } from 'react-router'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import SingleColumn from '@shared/components/templates/SingleColumn'
@@ -14,9 +9,7 @@ import { INGREDIENTS } from '@shared/graphql/queries/ingredients'
 import { GET_RECIPES } from '@shared/graphql/queries/recipes'
 import { CREATE_RECIPE } from '@shared/graphql/mutations/recipes'
 
-const renderIngredients = (
-  ingredients: Ingredient[]
-): React.ReactElement => (
+const renderIngredients = (ingredients: Ingredient[]): React.ReactElement => (
   <div>
     {ingredients.map((ingredient, index) => {
       return <div key={index}>{ingredient.name}</div>
@@ -58,10 +51,7 @@ const NewRecipe: React.FC = () => {
             })
 
             if (data) {
-              data.recipes = [
-                ...data.recipes,
-                { ...newRecipe, ...createRecipe },
-              ]
+              data.recipes = [...data.recipes, { ...newRecipe, ...createRecipe }]
             }
 
             store.writeQuery({
@@ -79,9 +69,7 @@ const NewRecipe: React.FC = () => {
     }
   }
 
-  const onChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ): void => {
+  const onChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
     const { name, value } = e.target
     // validateField(name, value);
     setNewRecipe((prev) => ({ ...prev, [name]: value }))
@@ -102,24 +90,11 @@ const NewRecipe: React.FC = () => {
       <h1>Hello New Recipe</h1>
 
       <form onSubmit={onSubmit} noValidate>
-        <FormControl
-          label="Title"
-          name="title"
-          onChange={onChange}
-          value={newRecipe.title}
-        />
+        <FormControl label="Title" name="title" onChange={onChange} value={newRecipe.title} />
 
-        <FormControl
-          label="Excerpt"
-          name="excerpt"
-          onChange={onChange}
-          value={newRecipe.excerpt}
-        />
+        <FormControl label="Excerpt" name="excerpt" onChange={onChange} value={newRecipe.excerpt} />
 
-        <select
-          name="servings"
-          onChange={onChange}
-          value={newRecipe.servings}>
+        <select name="servings" onChange={onChange} value={newRecipe.servings}>
           <option value="0">Select...</option>
           <option value="1">1</option>
           <option value="2">2</option>

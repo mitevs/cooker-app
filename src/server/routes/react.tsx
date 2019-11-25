@@ -16,9 +16,7 @@ router.get('*', async (ctx) => {
 
     await ctx.render('index', {
       // switch to stream
-      content: renderToString(
-        sheet.collectStyles(<App ctx={ctx}></App>)
-      ),
+      content: renderToString(sheet.collectStyles(<App ctx={ctx}></App>)),
       stylesheets: sheet.getStyleTags(),
       state: client.extract(),
     })

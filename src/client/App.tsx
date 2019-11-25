@@ -7,8 +7,7 @@ import App from '@shared/App'
 const ClientApp: React.FC = () => (
   <BrowserRouter>
     <ApolloProvider client={client}>
-      <App
-        ctx={{ user: window.APP.USER, setUser: () => false }}></App>
+      <App ctx={{ user: window.APP.USER, setUser: () => false }}></App>
     </ApolloProvider>
   </BrowserRouter>
 )

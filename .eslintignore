@@ -1,3 +1,2 @@
-webpack.config.js
-babel.config.js
 *.stories.tsx
+*.config.js

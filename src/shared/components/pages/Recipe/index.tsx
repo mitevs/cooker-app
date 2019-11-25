@@ -16,10 +16,7 @@ const Recipe: React.FC = () => {
   const { id } = useParams()
 
   if (id) {
-    const { loading, data } = useQuery<RecipeData, RecipeVars>(
-      GET_RECIPE,
-      { variables: { id } }
-    )
+    const { loading, data } = useQuery<RecipeData, RecipeVars>(GET_RECIPE, { variables: { id } })
 
     if (loading) {
       return <div>loading...</div>
