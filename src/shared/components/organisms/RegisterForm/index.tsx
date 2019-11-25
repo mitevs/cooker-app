@@ -5,7 +5,7 @@ import { CREATE_USER } from '@shared/graphql/mutations/users'
 import Button from '@shared/components/atoms/Button'
 import FormControl from '@shared/components/molecules/FormControl'
 
-const RegisterForm = () => {
+const RegisterForm: React.FC = () => {
   const [shouldRedirect, setShouldRedirect] = useState(false)
 
   const [user, setUser] = useState({
@@ -22,11 +22,11 @@ const RegisterForm = () => {
 
   const [createUser] = useMutation(CREATE_USER)
 
-  const isValidForm = () => {
-    return user.email && user.password && user.username
+  const isValidForm = (): boolean => {
+    return !!(user.email && user.password && user.username)
   }
 
-  const validateField = (name: string, value: string) => {
+  const validateField = (name: string, value: string): void => {
     if (!value) {
       setError((prev) => ({ ...prev, [name]: 'Required' }))
     } else {
@@ -34,7 +34,7 @@ const RegisterForm = () => {
     }
   }
 
-  const onSubmit = async (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent): void => {
     e.preventDefault()
 
     try {
@@ -45,7 +45,7 @@ const RegisterForm = () => {
     }
   }
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target
     validateField(name, value)
     setUser((prev) => ({ ...prev, [name]: value }))

@@ -4,7 +4,7 @@ import { darken, linearGradient, lighten } from 'polished'
 import { applyStyleModifiers } from 'styled-components-modifiers'
 
 const modifiers = {
-  primary: ({ theme }) => css`
+  primary: () => css`
     border: 1px solid ${darken(0.1, colors.buttons.primary)};
     ${linearGradient({
       colorStops: [

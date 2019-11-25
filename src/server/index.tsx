@@ -1,3 +1,4 @@
+/*eslint-env node*/
 import app from './main'
 
 const server = app.listen(3000, '0.0.0.0', () =>

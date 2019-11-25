@@ -1,7 +1,7 @@
 import React from 'react'
 import SingleColumn from '@shared/components/templates/SingleColumn'
 
-const Profile = () => (
+const Profile: React.FC = () => (
   <SingleColumn>
     <h1>Hello Profile</h1>
   </SingleColumn>

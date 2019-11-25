@@ -1,3 +1,4 @@
+/*eslint-env node*/
 import Koa from 'koa'
 import htmlMinify from 'koa-html-minifier'
 import bodyParser from 'koa-bodyparser'
@@ -9,6 +10,7 @@ import routes from './routes'
 import session from 'koa-session'
 import pino from 'koa-pino-logger'
 
+declare const APP_CONFIG
 const app = new Koa()
 
 app.keys = ['e1234123']

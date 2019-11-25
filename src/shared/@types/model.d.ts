@@ -23,7 +23,8 @@ declare interface Recipe extends Base {
   prepTime?: number
   nutritionFacts?: string
   prepSteps?: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   assets?: any[]
-  ingredients?: any[]
+  ingredients?: Ingredient[]
   author?: User
 }

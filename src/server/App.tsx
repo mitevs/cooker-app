@@ -9,10 +9,12 @@ interface AppProps {
   ctx: Context
 }
 
-export default ({ ctx }: AppProps) => (
+const ServerApp: React.FC<AppProps> = ({ ctx }: AppProps) => (
   <StaticRouter location={ctx.request.url} context={ctx}>
     <ApolloProvider client={client}>
-      <App ctx={{ user: ctx.state.user }}></App>
+      <App ctx={{ user: ctx.state.user, setUser: () => false }}></App>
     </ApolloProvider>
   </StaticRouter>
 )
+
+export default ServerApp

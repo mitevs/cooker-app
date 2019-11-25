@@ -2,8 +2,9 @@ import Router from 'koa-router'
 import { ME } from '@shared/graphql/queries/users'
 import client from '@server/graphql/client'
 import axios from 'axios'
+import { ContextSession } from 'koa-session'
 
-const router = new Router()
+const router = new Router<{}, ContextSession>()
 
 router.post('/login', async (ctx) => {
   const { username, password } = ctx.request.body
@@ -24,18 +25,21 @@ router.post('/login', async (ctx) => {
       },
     })
 
-    // get user with token
-    ctx.session.token = authToken
-    ctx.session.user = res2.data.me
-    ctx.body = ctx.session.user
+    // eslint-disable-next-line require-atomic-updates
+    ctx.session['token'] = authToken
+    // eslint-disable-next-line require-atomic-updates
+    ctx.session['user'] = res2.data.me
+    // eslint-disable-next-line require-atomic-updates
+    ctx.body = ctx.session['user']
   } catch (err) {
     console.log('error ', err)
+    // eslint-disable-next-line require-atomic-updates
     ctx.body = err.toString()
   }
 })
 
 router.get('/logout', async (ctx) => {
-  ctx.session = null
+  ctx.session = false
   ctx.redirect('/')
 })
 
