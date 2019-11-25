@@ -1,10 +1,10 @@
-import React from 'react';
-import SingleColumn from '@shared/components/templates/SingleColumn';
+import React from 'react'
+import SingleColumn from '@shared/components/templates/SingleColumn'
 
-const Profile = () => (
-    <SingleColumn>
-        <h1>Hello Profile</h1>
-    </SingleColumn>
-);
+const Profile: React.FC = () => (
+  <SingleColumn>
+    <h1>Hello Profile</h1>
+  </SingleColumn>
+)
 
-export default Profile;
+export default Profile

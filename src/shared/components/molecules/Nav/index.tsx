@@ -1,14 +1,16 @@
-import React from 'react';
-import StyledList from './styles/List';
+import React from 'react'
+import StyledList from './styles/List'
 
 const Nav: React.FC = ({ children }) => (
-    <nav>
-        {/* add nav left */}
+  <nav>
+    {/* add nav left */}
 
-        <StyledList modifiers="right">
-            {React.Children.map(children, child => <li>{child}</li>)}
-        </StyledList>
-    </nav>
+    <StyledList modifiers="right">
+      {React.Children.map(children, (child) => (
+        <li>{child}</li>
+      ))}
+    </StyledList>
+  </nav>
 )
 
-export default Nav;
+export default Nav

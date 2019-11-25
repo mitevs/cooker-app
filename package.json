@@ -12,7 +12,9 @@
     "dev": "cross-env NODE_ENV=development HMR=true npm-run-all --parallel dev:server dev:client",
     "analyse": "source-map-explorer dist/public/*.js",
     "sb": "start-storybook -p 9001 -c config/storybook",
-    "release": "npx standard-version"
+    "release": "npx standard-version",
+    "lint": "eslint src --ext .ts,.tsx,.js,.jsx",
+    "prettier": "prettier --write src/**/*.{tsx,ts,js}"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",
@@ -42,16 +44,26 @@
     "@types/react-router-dom": "^5.1.0",
     "@types/styled-components": "^4.1.19",
     "@types/webpack-env": "^1.14.1",
+    "@typescript-eslint/eslint-plugin": "^2.8.0",
+    "@typescript-eslint/parser": "^2.8.0",
     "apollo-client": "^2.6.4",
     "babel-loader": "^8.0.6",
     "babel-plugin-module-resolver": "^3.2.0",
     "babel-polyfill": "^6.26.0",
     "copy-webpack-plugin": "^5.0.4",
     "cross-env": "^6.0.3",
+    "eslint": "^6.7.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-config-react": "^1.1.7",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.16.0",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^3.1.0",
     "npm-run-all": "^4.1.5",
     "pino-pretty": "^3.2.2",
-    "prettier": "^1.18.2",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1",
     "react-docgen-typescript-loader": "^3.3.0",
     "react-docgen-typescript-webpack-plugin": "^1.1.0",
     "source-map-explorer": "^2.0.1",
@@ -89,5 +101,10 @@
     "react-router-dom": "^5.1.2",
     "remove": "^0.1.5",
     "styled-components": "^4.3.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }

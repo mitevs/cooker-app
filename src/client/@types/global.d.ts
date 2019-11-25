@@ -1,6 +1,8 @@
 declare interface Window {
-    APP: {
-        USER: User,
-        STATE: any
-    }
+  APP: {
+    USER: User
+    // maybe define global app state type?
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    STATE: any
+  }
 }

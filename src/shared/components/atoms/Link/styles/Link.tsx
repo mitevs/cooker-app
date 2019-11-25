@@ -1,32 +1,29 @@
-import styled, { css } from 'styled-components';
-import { colors } from '@shared/style';
-import { Link } from 'react-router-dom';
+import styled, { css } from 'styled-components'
+import { colors } from '@shared/style'
+import { Link } from 'react-router-dom'
 
 const linkStyle = css`
-    padding: 10px;
-    color: ${colors.grayDark};
-    text-decoration: none;
-    cursor: pointer;
+  padding: 10px;
+  color: ${colors.grayDark};
+  text-decoration: none;
+  cursor: pointer;
 
-    &:hover, &.active {
-        color: red;
-    }
+  &:hover,
+  &.active {
+    color: red;
+  }
 `
 
 const StyledRouterLink = styled(Link)`
-    ${linkStyle}
-`;
+  ${linkStyle}
+`
 
 const StyledLink = styled.a`
-    ${linkStyle}
-`;
+  ${linkStyle}
+`
 
 const StyledLinkPlaceholder = styled.span`
-    ${linkStyle}
-`;
+  ${linkStyle}
+`
 
-export {
-    StyledRouterLink,
-    StyledLink,
-    StyledLinkPlaceholder
-};
+export { StyledRouterLink, StyledLink, StyledLinkPlaceholder }

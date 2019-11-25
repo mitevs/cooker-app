@@ -1,10 +1,10 @@
-import React from 'react';
-import SingleColumn from '@shared/components/templates/SingleColumn';
+import React from 'react'
+import SingleColumn from '@shared/components/templates/SingleColumn'
 
-const Home = () => (
-    <SingleColumn>
-        <h1>Hello Home</h1>
-    </SingleColumn>
-);
+const Home: React.FC = () => (
+  <SingleColumn>
+    <h1>Hello Home</h1>
+  </SingleColumn>
+)
 
-export default Home;
+export default Home

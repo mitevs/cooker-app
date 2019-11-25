@@ -1,7 +1,7 @@
-import Header from './Header';
-import Container from './Container';
+import Header from './Header'
+import Container from './Container'
 
 export default {
-    Header,
-    Container
-};
+  Header,
+  Container,
+}
