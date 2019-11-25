@@ -12,7 +12,7 @@ interface RecipeVars {
   id: string
 }
 
-const Recipe = () => {
+const Recipe: React.FC = () => {
   const { id } = useParams()
 
   if (id) {

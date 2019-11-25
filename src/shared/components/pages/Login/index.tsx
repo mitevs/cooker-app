@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, FormEvent } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router'
 import AppContext from '@shared/AppContext'
 
-const Login = () => {
+const Login: React.FC = () => {
   const ctx = useContext(AppContext) as AppContext
 
   const [user, setUser] = useState({
@@ -13,7 +13,7 @@ const Login = () => {
 
   const [shouldRedirect, setShouldRedirect] = useState(false)
 
-  const onSubmit = async (e: any) => {
+  const onSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault()
 
     try {
@@ -26,7 +26,7 @@ const Login = () => {
     }
   }
 
-  const onChange = (e: any) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target
     setUser({ ...user, [name]: value })
   }

@@ -13,7 +13,7 @@
     "analyse": "source-map-explorer dist/public/*.js",
     "sb": "start-storybook -p 9001 -c config/storybook",
     "release": "npx standard-version",
-    "lint": "eslint src/**/*.{ts,tsx,js}",
+    "lint": "eslint src --ext .ts,.tsx,.js,.jsx",
     "prettier": "prettier --write src/**/*.{tsx,ts,js}"
   },
   "devDependencies": {

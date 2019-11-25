@@ -1,9 +1,6 @@
 import styled, { css } from 'styled-components'
 import Input from '@shared/components/atoms/Input'
-import {
-  applyStyleModifiers,
-  styleModifierPropTypes,
-} from 'styled-components-modifiers'
+import { applyStyleModifiers } from 'styled-components-modifiers'
 import { colors } from '@shared/style'
 
 const modifiers = {

@@ -1,10 +1,10 @@
-import React, { Fragment, useState } from 'react'
+import React, { useState } from 'react'
 import { renderRoutes } from 'react-router-config'
 import { Switch } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
 import { fontSize } from '@shared/style'
 import routes from './routes'
-import AppContext from './AppContext'
+import Context from './AppContext'
 
 const GlobalStyle = createGlobalStyle`
     body {
@@ -15,14 +15,18 @@ const GlobalStyle = createGlobalStyle`
     }
 `
 
-const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
+interface AppProps {
+  ctx: AppContext
+}
+
+const App: React.FC<AppProps> = ({ ctx }) => {
   const [user, setUser] = useState(ctx.user)
 
   return (
-    <AppContext.Provider value={{ user, setUser }}>
+    <Context.Provider value={{ user, setUser }}>
       <GlobalStyle />
       <Switch>{renderRoutes(routes)}</Switch>
-    </AppContext.Provider>
+    </Context.Provider>
   )
 }
 

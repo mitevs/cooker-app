@@ -4,7 +4,7 @@ import Nav from '@shared/components/molecules/Nav'
 import Link from '@shared/components/atoms/Link'
 import Styled from './styles'
 
-const Header = () => {
+const Header: React.FC = () => {
   const { user } = useContext(AppContext)
 
   return (

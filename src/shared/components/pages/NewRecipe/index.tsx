@@ -14,17 +14,17 @@ import { INGREDIENTS } from '@shared/graphql/queries/ingredients'
 import { GET_RECIPES } from '@shared/graphql/queries/recipes'
 import { CREATE_RECIPE } from '@shared/graphql/mutations/recipes'
 
-const renderIngredients = (ingredients: Ingredient[]) => {
-  return (
-    <div>
-      {ingredients.map((ingredient) => {
-        return <div>{ingredient.name}</div>
-      })}
-    </div>
-  )
-}
+const renderIngredients = (
+  ingredients: Ingredient[]
+): React.ReactElement => (
+  <div>
+    {ingredients.map((ingredient, index) => {
+      return <div key={index}>{ingredient.name}</div>
+    })}
+  </div>
+)
 
-const NewRecipe = () => {
+const NewRecipe: React.FC = () => {
   const { user } = useContext(AppContext)
   const [shouldRedirect, setShouldRedirect] = useState(false)
 
@@ -41,44 +41,53 @@ const NewRecipe = () => {
 
   const [createRecipe] = useMutation(CREATE_RECIPE)
 
-  const onSubmit = async (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault()
 
-    try {
-      await createRecipe({
-        variables: { ...newRecipe },
-        update: (store, { data: { createRecipe } }) => {
-          const data: any = store.readQuery({
-            query: GET_RECIPES,
-            variables: { authorId: user.id },
-          })
-          data.recipes = [
-            ...data.recipes,
-            { ...newRecipe, createRecipe },
-          ]
-          store.writeQuery({
-            query: GET_RECIPES,
-            data,
-            variables: { authorId: user.id },
-          })
-        },
-      })
+    if (user) {
+      try {
+        await createRecipe({
+          variables: { ...newRecipe },
+          // update apollo cache after mutation
+          update: (store, { data: { createRecipe } }) => {
+            const data = store.readQuery<{
+              recipes: Recipe[]
+            }>({
+              query: GET_RECIPES,
+              variables: { authorId: user.id },
+            })
 
-      setShouldRedirect(true)
-    } catch (err) {
-      console.log('err ', err)
+            if (data) {
+              data.recipes = [
+                ...data.recipes,
+                { ...newRecipe, ...createRecipe },
+              ]
+            }
+
+            store.writeQuery({
+              query: GET_RECIPES,
+              data,
+              variables: { authorId: user.id },
+            })
+          },
+        })
+
+        setShouldRedirect(true)
+      } catch (err) {
+        console.log('err ', err)
+      }
     }
   }
 
   const onChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  ): void => {
     const { name, value } = e.target
     // validateField(name, value);
     setNewRecipe((prev) => ({ ...prev, [name]: value }))
   }
 
-  const { loading, data, error } = useQuery(INGREDIENTS)
+  const { loading, data } = useQuery(INGREDIENTS)
 
   if (loading) {
     return <div>loading...</div>
