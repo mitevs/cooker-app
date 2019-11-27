@@ -1,15 +1,16 @@
 import React, { useContext } from 'react'
 import AppContext from '@shared/AppContext'
-import Nav from '@shared/components/molecules/Nav'
-import Link from '@shared/components/atoms/Link'
-import Styled from './styles'
+import { Nav } from '@shared/components/molecules/Nav'
+import { Link } from '@shared/components/atoms/Link'
+import { StyledHeader } from './styles/Header'
+import { StyledContainer } from './styles/Container'
 
 const Header: React.FC = () => {
   const { user } = useContext(AppContext)
 
   return (
-    <Styled.Header>
-      <Styled.Container>
+    <StyledHeader>
+      <StyledContainer>
         {user ? (
           <Nav>
             <Link to="/recipes">recipes</Link>
@@ -22,9 +23,9 @@ const Header: React.FC = () => {
             <Link to="/login">login</Link>
           </Nav>
         )}
-      </Styled.Container>
-    </Styled.Header>
+      </StyledContainer>
+    </StyledHeader>
   )
 }
 
-export default Header
+export { Header }

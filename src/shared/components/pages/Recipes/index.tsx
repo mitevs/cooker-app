@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import SingleColumn from '@shared/components/templates/SingleColumn'
-import Link from '@shared/components/atoms/Link'
+import { SingleColumn } from '@shared/components/templates/SingleColumn'
+import { Link } from '@shared/components/atoms/Link'
 import { GET_RECIPES } from '@shared/graphql/queries/recipes'
-import AppContext from '@shared/AppContext'
+import { Context } from '@shared/AppContext'
 
 const renderRecipes = (recipes: Recipe[]): React.ReactElement => (
   <div>
@@ -19,7 +19,7 @@ const renderRecipes = (recipes: Recipe[]): React.ReactElement => (
 )
 
 const Recipes: React.FC = () => {
-  const { user } = useContext(AppContext)
+  const { user } = useContext(Context)
   const { loading, data } = useQuery(GET_RECIPES, {
     variables: { authorId: user && user.id },
   })

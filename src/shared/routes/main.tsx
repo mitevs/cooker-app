@@ -6,28 +6,44 @@ export default [
     path: '/',
     exact: true,
     component: Loadable({
-      loader: () => import('@shared/components/pages/Home'),
+      loader: () =>
+        import(
+          /* webpackChunkName: "home" */
+          '@shared/components/pages/Home'
+        ),
       loading: Loading,
     }),
   },
   {
     path: '/login',
     component: Loadable({
-      loader: () => import('@shared/components/pages/Login'),
+      loader: () =>
+        import(
+          /* webpackChunkName: "login" */
+          '@shared/components/pages/Login'
+        ),
       loading: Loading,
     }),
   },
   {
     path: '/profile',
     component: Loadable({
-      loader: () => import('@shared/components/pages/Profile'),
+      loader: () =>
+        import(
+          /* webpackChunkName: "profile" */
+          '@shared/components/pages/Profile'
+        ),
       loading: Loading,
     }),
   },
   {
     path: '/register',
     component: Loadable({
-      loader: () => import('@shared/components/pages/Register'),
+      loader: () =>
+        import(
+          /* webpackChunkName: "register" */
+          '@shared/components/pages/Register'
+        ),
       loading: Loading,
     }),
   },

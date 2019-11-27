@@ -1,6 +1,7 @@
 import React, { ChangeEvent } from 'react'
-import Label from '@shared/components/atoms/Label'
-import Styled from './styles'
+import { Label } from '@shared/components/atoms/Label'
+import { StyledFormControl } from './styles/FormControl'
+import { StyledInput } from './styles/Input'
 
 interface FormControlProps {
   id?: string
@@ -21,9 +22,9 @@ const FormControl: React.FC<FormControlProps> = ({
   error,
   onChange,
 }) => (
-  <Styled.FormControl>
+  <StyledFormControl>
     <Label modifiers={error ? 'error' : undefined}>{label}</Label>
-    <Styled.Input
+    <StyledInput
       id={id}
       name={name}
       type={type}
@@ -31,7 +32,7 @@ const FormControl: React.FC<FormControlProps> = ({
       value={value}
       modifiers={error ? 'error' : undefined}
     />
-  </Styled.FormControl>
+  </StyledFormControl>
 )
 
-export default FormControl
+export { FormControl }

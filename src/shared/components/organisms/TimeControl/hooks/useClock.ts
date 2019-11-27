@@ -8,7 +8,7 @@ interface Clock {
 }
 
 // unit-test this hook
-export default (initHours = 0, initMinutes = 0): Clock => {
+export const useClock = (initHours = 0, initMinutes = 0): Clock => {
   const [hours, updateHours] = useState(initHours)
   const [minutes, updateMinutes] = useState(initMinutes)
 

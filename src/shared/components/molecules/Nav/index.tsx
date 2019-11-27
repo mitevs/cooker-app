@@ -1,5 +1,5 @@
 import React from 'react'
-import StyledList from './styles/List'
+import { StyledList } from './styles/List'
 
 const Nav: React.FC = ({ children }) => (
   <nav>
@@ -13,4 +13,4 @@ const Nav: React.FC = ({ children }) => (
   </nav>
 )
 
-export default Nav
+export { Nav }

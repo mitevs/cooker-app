@@ -1,10 +1,10 @@
 import React, { useState, useContext, FormEvent, ChangeEvent } from 'react'
 import { Redirect } from 'react-router'
 import { useQuery, useMutation } from '@apollo/react-hooks'
-import SingleColumn from '@shared/components/templates/SingleColumn'
-import FormControl from '@shared/components/molecules/FormControl'
-import Button from '@shared/components/atoms/Button'
-import AppContext from '@shared/AppContext'
+import { SingleColumn } from '@shared/components/templates/SingleColumn'
+import { FormControl } from '@shared/components/molecules/FormControl'
+import { Button } from '@shared/components/atoms/Button'
+import { Context } from '@shared/AppContext'
 import { INGREDIENTS } from '@shared/graphql/queries/ingredients'
 import { GET_RECIPES } from '@shared/graphql/queries/recipes'
 import { CREATE_RECIPE } from '@shared/graphql/mutations/recipes'
@@ -18,7 +18,7 @@ const renderIngredients = (ingredients: Ingredient[]): React.ReactElement => (
 )
 
 const NewRecipe: React.FC = () => {
-  const { user } = useContext(AppContext)
+  const { user } = useContext(Context)
   const [shouldRedirect, setShouldRedirect] = useState(false)
 
   const [newRecipe, setNewRecipe] = useState({
@@ -51,7 +51,10 @@ const NewRecipe: React.FC = () => {
             })
 
             if (data) {
-              data.recipes = [...data.recipes, { ...newRecipe, ...createRecipe }]
+              data.recipes = [
+                ...data.recipes,
+                { ...newRecipe, ...createRecipe },
+              ]
             }
 
             store.writeQuery({
@@ -69,7 +72,9 @@ const NewRecipe: React.FC = () => {
     }
   }
 
-  const onChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
+  const onChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ): void => {
     const { name, value } = e.target
     // validateField(name, value);
     setNewRecipe((prev) => ({ ...prev, [name]: value }))
@@ -90,9 +95,19 @@ const NewRecipe: React.FC = () => {
       <h1>Hello New Recipe</h1>
 
       <form onSubmit={onSubmit} noValidate>
-        <FormControl label="Title" name="title" onChange={onChange} value={newRecipe.title} />
+        <FormControl
+          label="Title"
+          name="title"
+          onChange={onChange}
+          value={newRecipe.title}
+        />
 
-        <FormControl label="Excerpt" name="excerpt" onChange={onChange} value={newRecipe.excerpt} />
+        <FormControl
+          label="Excerpt"
+          name="excerpt"
+          onChange={onChange}
+          value={newRecipe.excerpt}
+        />
 
         <select name="servings" onChange={onChange} value={newRecipe.servings}>
           <option value="0">Select...</option>

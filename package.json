@@ -14,7 +14,7 @@
     "sb": "start-storybook -p 9001 -c config/storybook",
     "release": "npx standard-version",
     "lint": "eslint src --ext .ts,.tsx,.js,.jsx",
-    "prettier": "prettier --write {src,config}/**/*.{tsx,ts,js}"
+    "prettier": "prettier --write ./{src,config}/**/*.{ts,tsx,js,jsx}"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",

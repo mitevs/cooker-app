@@ -1,5 +1,8 @@
 const path = require('path')
-const pathToInlineSvg = path.resolve(__dirname, '../../src/shared/components/atoms/Icon/svg')
+const pathToInlineSvg = path.resolve(
+  __dirname,
+  '../../src/shared/components/atoms/Icon/svg'
+)
 
 module.exports = ({ config }) => {
   const rules = config.module.rules

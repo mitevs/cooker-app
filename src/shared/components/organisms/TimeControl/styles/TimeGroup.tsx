@@ -1,21 +1,21 @@
 import styled from 'styled-components'
-import Icon from './Icon'
+import { StyledIcon } from './Icon'
 
-const StyledDiv = styled.div`
+const StyledTimeGroup = styled.div`
   &:first-child {
     margin-right: 10px;
   }
 
-  ${Icon} {
+  ${StyledIcon} {
     opacity: 0;
     transition: opacity 0.3s;
   }
 
   &:hover {
-    ${Icon} {
+    ${StyledIcon} {
       opacity: 1;
     }
   }
 `
 
-export default StyledDiv
+export { StyledTimeGroup }

@@ -1,3 +1,3 @@
-import StyledInput from './styles/Input'
+import { StyledInput as Input } from './styles/Input'
 
-export default StyledInput
+export { Input }

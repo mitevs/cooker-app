@@ -13,4 +13,4 @@ const StyledInput = styled.input`
   max-width: 100%;
 `
 
-export default StyledInput
+export { StyledInput }

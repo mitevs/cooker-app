@@ -1,5 +1,5 @@
 import React from 'react'
 
-export default React.createContext<AppContext>({
+export const Context = React.createContext<AppContext>({
   setUser: () => false,
 })

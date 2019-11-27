@@ -33,4 +33,4 @@ const StyledIcon = styled.i<{ modifiers?: string | string[] }>`
   ${applyStyleModifiers(modifiers)}
 `
 
-export default StyledIcon
+export { StyledIcon }

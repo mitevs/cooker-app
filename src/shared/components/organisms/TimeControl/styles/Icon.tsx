@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import Icon from '@shared/components/atoms/Icon'
+import { Icon } from '@shared/components/atoms/Icon'
 import { colors } from '@shared/style'
 
 const StyledIcon = styled(Icon)`
@@ -16,4 +16,4 @@ const StyledIcon = styled(Icon)`
   }
 `
 
-export default StyledIcon
+export { StyledIcon }

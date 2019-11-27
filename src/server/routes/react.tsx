@@ -5,8 +5,9 @@ import client from '@server/graphql/client'
 import App from '@server/App'
 import { ServerStyleSheet } from 'styled-components'
 import Loadable from 'react-loadable'
+import { Context } from 'koa'
 
-const router = new Router()
+const router = new Router<{}, Context>()
 
 router.get('*', async (ctx) => {
   const sheet = new ServerStyleSheet()

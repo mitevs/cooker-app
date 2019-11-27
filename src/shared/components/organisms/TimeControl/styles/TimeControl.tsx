@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
-const StyledDiv = styled.div`
+const StyledTimeControl = styled.div`
   display: flex;
 `
 
-export default StyledDiv
+export { StyledTimeControl }

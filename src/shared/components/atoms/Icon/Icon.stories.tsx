@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { select } from '@storybook/addon-knobs'
-import Icon, { IconType } from '.'
+import { Icon, IconType } from '.'
 
 const stories = storiesOf('Atoms|Icon', module)
 

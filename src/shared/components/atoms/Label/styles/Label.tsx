@@ -16,4 +16,4 @@ const StyledLabel = styled.label<{ modifiers?: string }>`
   ${applyStyleModifiers(modifiers)}
 `
 
-export default StyledLabel
+export { StyledLabel }
