@@ -1,5 +1,9 @@
 import React, { MouseEvent } from 'react'
-import { StyledRouterLink, StyledLink, StyledLinkPlaceholder } from './styles/Link'
+import {
+  StyledRouterLink,
+  StyledLink,
+  StyledLinkPlaceholder,
+} from './styles/Link'
 
 type LinkProps = {
   href?: string
@@ -8,7 +12,13 @@ type LinkProps = {
   className?: string
 }
 
-const Link: React.FC<LinkProps> = ({ to, href, children, onClick, className }) => {
+const Link: React.FC<LinkProps> = ({
+  to,
+  href,
+  children,
+  onClick,
+  className,
+}) => {
   if (to) {
     return (
       <StyledRouterLink className={className} to={to} onClick={onClick}>
@@ -30,4 +40,4 @@ const Link: React.FC<LinkProps> = ({ to, href, children, onClick, className }) =
   }
 }
 
-export default Link
+export { Link }

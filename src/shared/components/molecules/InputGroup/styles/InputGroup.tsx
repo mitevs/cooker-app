@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import Label from './Label'
-import Input from './Input'
+import { StyledInput } from './Input'
 import { applyStyleModifiers } from 'styled-components-modifiers'
 
 const modifiers = {
@@ -18,11 +18,11 @@ const StyledInputGroup = styled.div<{ modifiers?: string }>`
     order: 1;
   }
 
-  ${Input} {
+  ${StyledInput} {
     order: 2;
   }
 
   ${applyStyleModifiers(modifiers)}
 `
 
-export default StyledInputGroup
+export { StyledInputGroup }

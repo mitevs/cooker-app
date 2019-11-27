@@ -1,3 +1,3 @@
-import StyledLabel from './styles/Label'
+import { StyledLabel as Label } from './styles/Label'
 
-export default StyledLabel
+export { Label }

@@ -1,5 +1,7 @@
 import React, { InputHTMLAttributes } from 'react'
-import Styled from './styles'
+import { StyledInputGroup } from './styles/InputGroup'
+import { StyledLabel } from './styles/Label'
+import { StyledInput } from './styles/Input'
 
 interface InputGroup extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
@@ -8,11 +10,11 @@ interface InputGroup extends InputHTMLAttributes<HTMLInputElement> {
 
 const InputGroup: React.FC<InputGroup> = (props) => {
   return (
-    <Styled.InputGroup modifiers={props.modifiers}>
-      <Styled.Label modifiers={props.modifiers}>{props.label}</Styled.Label>
-      <Styled.Input {...props} modifiers={props.modifiers} />
-    </Styled.InputGroup>
+    <StyledInputGroup modifiers={props.modifiers}>
+      <StyledLabel modifiers={props.modifiers}>{props.label}</StyledLabel>
+      <StyledInput {...props} modifiers={props.modifiers} />
+    </StyledInputGroup>
   )
 }
 
-export default InputGroup
+export { InputGroup }

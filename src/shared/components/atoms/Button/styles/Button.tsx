@@ -7,7 +7,10 @@ const modifiers = {
   primary: () => css`
     border: 1px solid ${darken(0.1, colors.buttons.primary)};
     ${linearGradient({
-      colorStops: [`${colors.buttons.primary} 0%`, `${darken(0.05, colors.buttons.primary)} 100%`],
+      colorStops: [
+        `${colors.buttons.primary} 0%`,
+        `${darken(0.05, colors.buttons.primary)} 100%`,
+      ],
       fallback: colors.buttons.primary,
       toDirection: 'to bottom',
     })}
@@ -52,4 +55,4 @@ const StyledButton = styled.button<{ modifiers?: string }>`
   ${applyStyleModifiers(modifiers)}
 `
 
-export default StyledButton
+export { StyledButton }

@@ -1,5 +1,5 @@
 import React from 'react'
-import StyledIcon from './styles/Icon'
+import { StyledIcon } from './styles/Icon'
 import ArrowUp from './svg/arrow-up.svg'
 import ArrowDown from './svg/arrow-down.svg'
 
@@ -30,4 +30,4 @@ const Icon: React.FC<IconProps> = ({ type, modifiers, onClick, className }) => {
   )
 }
 
-export default Icon
+export { Icon }

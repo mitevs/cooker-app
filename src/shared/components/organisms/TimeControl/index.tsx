@@ -1,22 +1,24 @@
 import React from 'react'
-import InputGroup from '@shared/components/molecules/InputGroup'
+import { InputGroup } from '@shared/components/molecules/InputGroup'
 import { IconType } from '@shared/components/atoms/Icon'
-import { TimeControl, TimeGroup, Icon } from './styles'
+import { StyledTimeControl } from './styles/TimeControl'
+import { StyledTimeGroup } from './styles/TimeGroup'
+import { StyledIcon } from './styles/Icon'
 import { parseNumber } from '@shared/utils/parsers'
-import useClock from './hooks/useClock'
+import { useClock } from './hooks/useClock'
 
 export interface TimePickerProps {
   h?: number
   m?: number
 }
 
-const TimePicker: React.FC<TimePickerProps> = ({ h = 0, m = 0 }) => {
+const TimeControl: React.FC<TimePickerProps> = ({ h = 0, m = 0 }) => {
   const { hours, minutes, setHours, setMinutes } = useClock(h, m)
 
   return (
-    <TimeControl>
-      <TimeGroup>
-        <Icon
+    <StyledTimeControl>
+      <StyledTimeGroup>
+        <StyledIcon
           type={IconType.arrowUp}
           modifiers={['big', 'point']}
           onClick={() => setHours(hours + 1)}
@@ -26,15 +28,15 @@ const TimePicker: React.FC<TimePickerProps> = ({ h = 0, m = 0 }) => {
           value={hours}
           onChange={({ target: { value } }) => setHours(parseNumber(value, h))}
         />
-        <Icon
+        <StyledIcon
           type={IconType.arrowDown}
           modifiers={['big', 'point']}
           onClick={() => setHours(hours - 1)}
         />
-      </TimeGroup>
+      </StyledTimeGroup>
 
-      <TimeGroup>
-        <Icon
+      <StyledTimeGroup>
+        <StyledIcon
           type={IconType.arrowUp}
           modifiers={['big', 'point']}
           onClick={() => setMinutes(minutes + 1)}
@@ -42,16 +44,18 @@ const TimePicker: React.FC<TimePickerProps> = ({ h = 0, m = 0 }) => {
         <InputGroup
           label="M"
           value={minutes}
-          onChange={({ target: { value } }) => setMinutes(parseNumber(value, minutes))}
+          onChange={({ target: { value } }) =>
+            setMinutes(parseNumber(value, minutes))
+          }
         />
-        <Icon
+        <StyledIcon
           type={IconType.arrowDown}
           modifiers={['big', 'point']}
           onClick={() => setMinutes(minutes - 1)}
         />
-      </TimeGroup>
-    </TimeControl>
+      </StyledTimeGroup>
+    </StyledTimeControl>
   )
 }
 
-export default TimePicker
+export { TimeControl }

@@ -31,4 +31,4 @@ const Headline: React.FC<HeadlineProps> = ({ level, children, className }) => {
   return <HTag className={className}>{children}</HTag>
 }
 
-export default Headline
+export { Headline }

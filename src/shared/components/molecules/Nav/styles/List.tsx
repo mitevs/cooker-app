@@ -19,4 +19,4 @@ const StyledList = styled.ul<{ modifiers?: string | string[] }>`
   ${applyStyleModifiers(modifiers)}
 `
 
-export default StyledList
+export { StyledList }

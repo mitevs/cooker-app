@@ -1,8 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import Header from '.'
 import AppContext from '@shared/AppContext'
 import { BrowserRouter } from 'react-router-dom'
+import { Header } from '.'
 
 const stories = storiesOf('Organisms|Header', module)
 
@@ -10,7 +10,7 @@ stories
   .add('Default', () => {
     return (
       <BrowserRouter>
-        <AppContext.Provider value={{}}>
+        <AppContext.Provider value={{ setUser: () => false }}>
           <Header></Header>
         </AppContext.Provider>
       </BrowserRouter>
@@ -26,7 +26,7 @@ stories
 
     return (
       <BrowserRouter>
-        <AppContext.Provider value={{ user }}>
+        <AppContext.Provider value={{ user, setUser: () => false }}>
           <Header></Header>
         </AppContext.Provider>
       </BrowserRouter>

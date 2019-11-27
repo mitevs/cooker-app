@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
-import Header from '@shared/components/organisms/Header'
-import Footer from '@shared/components/organisms/Footer'
+import { Header } from '@shared/components/organisms/Header'
+import { Footer } from '@shared/components/organisms/Footer'
 
 const TwoColumn: React.FC = ({ children }) => (
   <Fragment>
@@ -13,4 +13,4 @@ const TwoColumn: React.FC = ({ children }) => (
   </Fragment>
 )
 
-export default TwoColumn
+export { TwoColumn }

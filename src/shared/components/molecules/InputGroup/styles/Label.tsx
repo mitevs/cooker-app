@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { colors, sizes } from '@shared/style'
-import Label from '@shared/components/atoms/Label'
+import { Label } from '@shared/components/atoms/Label'
 import { applyStyleModifiers } from 'styled-components-modifiers'
 
 const modifiers = {
@@ -26,4 +26,4 @@ const StyledLabel = styled(Label)<{ modifiers?: string }>`
   ${applyStyleModifiers(modifiers)}
 `
 
-export default StyledLabel
+export { StyledLabel }

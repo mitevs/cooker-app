@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import Input from '@shared/components/atoms/Input'
+import { Input } from '@shared/components/atoms/Input'
 import { applyStyleModifiers } from 'styled-components-modifiers'
 import { sizes } from '@shared/style'
 
@@ -17,4 +17,4 @@ const StyledInput = styled(Input)<{ modifiers?: string }>`
   ${applyStyleModifiers(modifiers)}
 `
 
-export default StyledInput
+export { StyledInput }

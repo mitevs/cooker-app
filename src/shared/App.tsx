@@ -4,7 +4,7 @@ import { Switch } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
 import { fontSize } from '@shared/style'
 import routes from './routes'
-import Context from './AppContext'
+import { Context } from './AppContext'
 
 const GlobalStyle = createGlobalStyle`
     body {

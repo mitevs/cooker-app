@@ -3,10 +3,10 @@ import axios from 'axios'
 import { Redirect } from 'react-router'
 import { FormControl } from '@shared/components/molecules/FormControl'
 import { Button } from '@shared/components/atoms/Button'
-import { Context } from '@shared/AppContext'
+import AppContext from '@shared/AppContext'
 
 const Login: React.FC = () => {
-  const ctx = useContext(Context)
+  const ctx = useContext(AppContext) as AppContext
 
   const [user, setUser] = useState({
     username: '',
@@ -61,4 +61,4 @@ const Login: React.FC = () => {
   }
 }
 
-export default Login
+export { Login }

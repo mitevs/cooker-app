@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { number } from '@storybook/addon-knobs'
-import TimeControl from '.'
+import { TimeControl } from '.'
 
 const stories = storiesOf('Organisms|TimeControl', module)
 

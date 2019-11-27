@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
-import Header from '@shared/components/organisms/Header'
-import Footer from '@shared/components/organisms/Footer'
+import { Header } from '@shared/components/organisms/Header'
+import { Footer } from '@shared/components/organisms/Footer'
 
 interface SingleColumnProps {
   hasHeader?: boolean
@@ -26,4 +26,4 @@ const SingleColumn: React.FC<SingleColumnProps> = ({
   </Fragment>
 )
 
-export default SingleColumn
+export { SingleColumn }

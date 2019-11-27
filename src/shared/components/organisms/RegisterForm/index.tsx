@@ -2,8 +2,8 @@ import React, { useState, ChangeEvent, FormEvent } from 'react'
 import { Redirect } from 'react-router'
 import { useMutation } from '@apollo/react-hooks'
 import { CREATE_USER } from '@shared/graphql/mutations/users'
-import Button from '@shared/components/atoms/Button'
-import FormControl from '@shared/components/molecules/FormControl'
+import { Button } from '@shared/components/atoms/Button'
+import { FormControl } from '@shared/components/molecules/FormControl'
 
 const RegisterForm: React.FC = () => {
   const [shouldRedirect, setShouldRedirect] = useState(false)
@@ -88,4 +88,4 @@ const RegisterForm: React.FC = () => {
   }
 }
 
-export default RegisterForm
+export { RegisterForm }

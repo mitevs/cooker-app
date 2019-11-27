@@ -1,7 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
-import SingleColumn from '@shared/components/templates/SingleColumn'
+import { SingleColumn } from '@shared/components/templates/SingleColumn'
 import { GET_RECIPE } from '@shared/graphql/queries/recipes'
 
 interface RecipeData {
@@ -16,7 +16,9 @@ const Recipe: React.FC = () => {
   const { id } = useParams()
 
   if (id) {
-    const { loading, data } = useQuery<RecipeData, RecipeVars>(GET_RECIPE, { variables: { id } })
+    const { loading, data } = useQuery<RecipeData, RecipeVars>(GET_RECIPE, {
+      variables: { id },
+    })
 
     if (loading) {
       return <div>loading...</div>
