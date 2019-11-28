@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import AppContext from '@shared/AppContext'
+import { Context } from '@shared/AppContext'
 import { BrowserRouter } from 'react-router-dom'
 import { Header } from '.'
 
@@ -10,9 +10,9 @@ stories
   .add('Default', () => {
     return (
       <BrowserRouter>
-        <AppContext.Provider value={{ setUser: () => false }}>
+        <Context.Provider value={{ setUser: () => false }}>
           <Header></Header>
-        </AppContext.Provider>
+        </Context.Provider>
       </BrowserRouter>
     )
   })
@@ -26,9 +26,9 @@ stories
 
     return (
       <BrowserRouter>
-        <AppContext.Provider value={{ user, setUser: () => false }}>
+        <Context.Provider value={{ user, setUser: () => false }}>
           <Header></Header>
-        </AppContext.Provider>
+        </Context.Provider>
       </BrowserRouter>
     )
   })

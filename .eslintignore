@@ -1,2 +1,3 @@
 *.stories.tsx
 *.config.js
+config/*

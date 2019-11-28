@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
-import AppContext from '@shared/AppContext'
+import { Context } from '@shared/AppContext'
 import { Nav } from '@shared/components/molecules/Nav'
 import { Link } from '@shared/components/atoms/Link'
 import { StyledHeader } from './styles/Header'
 import { StyledContainer } from './styles/Container'
 
 const Header: React.FC = () => {
-  const { user } = useContext(AppContext)
+  const { user } = useContext(Context)
 
   return (
     <StyledHeader>

@@ -13,16 +13,25 @@ router.get('*', async (ctx) => {
   const sheet = new ServerStyleSheet()
 
   try {
+    const modules: string[] = []
     await Loadable.preloadReady()
 
     await ctx.render('index', {
       // switch to stream
-      content: renderToString(sheet.collectStyles(<App ctx={ctx}></App>)),
+      content: renderToString(
+        sheet.collectStyles(
+          <Loadable.Capture report={(moduleName) => modules.push(moduleName)}>
+            <App ctx={ctx}></App>
+          </Loadable.Capture>
+        )
+      ),
       stylesheets: sheet.getStyleTags(),
       state: client.extract(),
     })
 
-    // sheet.seal();
+    ctx.log.info(modules)
+
+    sheet.seal()
   } catch (err) {
     await ctx.render('error', { error: err.toString() })
   }

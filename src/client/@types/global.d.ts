@@ -6,3 +6,7 @@ declare interface Window {
     STATE: any
   }
 }
+
+declare interface AppConfig extends AppConfigBase {
+  clientKey: string
+}

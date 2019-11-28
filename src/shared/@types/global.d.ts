@@ -3,10 +3,8 @@ declare interface AppContext {
   setUser: (user: User) => void
 }
 
-declare interface AppConfig {
-  cdnUrl: string
+declare interface AppConfigBase {
+  env: string
 }
-
-declare const APP_CONFIG: AppConfig
 
 declare const IS_SERVER: boolean

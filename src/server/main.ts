@@ -9,11 +9,19 @@ import { join } from 'path'
 import routes from './routes'
 import session from 'koa-session'
 import pino from 'koa-pino-logger'
+import compress from 'koa-compress'
+import config from '@server/config'
 
-declare const APP_CONFIG
 const app = new Koa()
 
 app.keys = ['e1234123']
+
+app.use(
+  compress({
+    threshold: 2048,
+    flush: require('zlib').Z_SYNC_FLUSH,
+  })
+)
 
 app.use(bodyParser())
 app.use(session(app))
@@ -27,7 +35,8 @@ app.use(
 
 // locals
 app.use(async (ctx, next) => {
-  ctx.state.APP_CONFIG = APP_CONFIG
+  console.log('CDN URL: ', config.cdnUrl)
+  ctx.state.cdnUrl = config.cdnUrl
   ctx.state.user = ctx.session.user
   await next()
 })
