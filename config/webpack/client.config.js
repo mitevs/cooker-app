@@ -4,6 +4,8 @@ const baseConfig = require('./base.config')
 const appConfig = require('../app/convict')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const ReactLoadablePlugin = require('react-loadable/webpack')
+  .ReactLoadablePlugin
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const serverSrc = '../../src/server'
@@ -57,6 +59,11 @@ const config = merge(baseConfig(appConfig.client), {
       }),
     ],
   },
+  plugins: [
+    new ReactLoadablePlugin({
+      filename: path.join(__dirname, outDir, 'react-loadable.json'),
+    }),
+  ],
 })
 
 if (isAnalyze) {

@@ -35,7 +35,6 @@ app.use(
 
 // locals
 app.use(async (ctx, next) => {
-  console.log('CDN URL: ', config.cdnUrl)
   ctx.state.cdnUrl = config.cdnUrl
   ctx.state.user = ctx.session.user
   await next()

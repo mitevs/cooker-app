@@ -11,10 +11,12 @@ const outDir = '../../dist'
 
 const config = merge(baseConfig(appConfig, true), {
   target: 'node',
-  entry: [path.resolve(__dirname, serverSrc, 'index.tsx')],
+  entry: {
+    server: [path.resolve(__dirname, serverSrc, 'index.tsx')],
+  },
   output: {
     path: path.resolve(__dirname, outDir),
-    filename: 'server.js',
+    filename: '[name].js',
   },
   node: {
     __dirname: false,
@@ -35,7 +37,7 @@ const config = merge(baseConfig(appConfig, true), {
 
 if (config.mode === 'development') {
   // add poll for hmr
-  config.entry.push('webpack/hot/poll?1000')
+  config.entry.server.push('webpack/hot/poll?1000')
   config.externals = [
     nodeExternals({
       whitelist: ['webpack/hot/poll?1000'],

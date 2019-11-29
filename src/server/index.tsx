@@ -11,8 +11,6 @@ if (module.hot) {
     server.on('request', app.callback())
   })
 
-  module.hot.accept()
-
   module.hot.dispose(() => {
     server.close()
   })

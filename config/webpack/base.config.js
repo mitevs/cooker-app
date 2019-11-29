@@ -36,6 +36,10 @@ const getConfig = (appConfig, isServer = false) => {
         new webpack.NamedModulesPlugin(),
       ]
     )
+
+    config.watchOptions = {
+      ignored: /node_modules/,
+    }
   }
 
   return config

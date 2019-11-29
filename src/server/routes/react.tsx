@@ -6,6 +6,10 @@ import App from '@server/App'
 import { ServerStyleSheet } from 'styled-components'
 import Loadable from 'react-loadable'
 import { Context } from 'koa'
+import { getBundles } from 'react-loadable/webpack'
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const stats = require('../../../dist/react-loadable.json')
 
 const router = new Router<{}, Context>()
 
@@ -16,22 +20,22 @@ router.get('*', async (ctx) => {
     const modules: string[] = []
     await Loadable.preloadReady()
 
-    await ctx.render('index', {
-      // switch to stream
-      content: renderToString(
-        sheet.collectStyles(
-          <Loadable.Capture report={(moduleName) => modules.push(moduleName)}>
-            <App ctx={ctx}></App>
-          </Loadable.Capture>
-        )
-      ),
-      stylesheets: sheet.getStyleTags(),
-      state: client.extract(),
-    })
-
-    ctx.log.info(modules)
+    const content = renderToString(
+      sheet.collectStyles(
+        <Loadable.Capture report={(moduleName) => modules.push(moduleName)}>
+          <App ctx={ctx}></App>
+        </Loadable.Capture>
+      )
+    )
 
     sheet.seal()
+
+    await ctx.render('index', {
+      content,
+      stylesheets: sheet.getStyleTags(),
+      state: client.extract(),
+      preloadedBundles: getBundles(stats, modules),
+    })
   } catch (err) {
     await ctx.render('error', { error: err.toString() })
   }
