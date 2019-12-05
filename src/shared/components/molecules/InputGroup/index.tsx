@@ -1,20 +1,11 @@
-import React, { InputHTMLAttributes } from 'react'
+import React from 'react'
 import { StyledInputGroup } from './styles/InputGroup'
-import { StyledLabel } from './styles/Label'
-import { StyledInput } from './styles/Input'
+import { StyledSign } from './styles/Sign'
 
-interface InputGroup extends InputHTMLAttributes<HTMLInputElement> {
-  label?: string
-  modifiers?: string
+const InputGroup: React.FC & { Sign: React.ComponentType } = ({ children }) => {
+  return <StyledInputGroup>{children}</StyledInputGroup>
 }
 
-const InputGroup: React.FC<InputGroup> = (props) => {
-  return (
-    <StyledInputGroup modifiers={props.modifiers}>
-      <StyledLabel modifiers={props.modifiers}>{props.label}</StyledLabel>
-      <StyledInput {...props} modifiers={props.modifiers} />
-    </StyledInputGroup>
-  )
-}
+InputGroup.Sign = StyledSign
 
 export { InputGroup }

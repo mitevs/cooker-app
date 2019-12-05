@@ -1,28 +1,25 @@
-import styled, { css } from 'styled-components'
-import Label from './Label'
-import { StyledInput } from './Input'
-import { applyStyleModifiers } from 'styled-components-modifiers'
+import styled from 'styled-components'
+import { Input } from '@shared/components/atoms/Input'
+import { StyledDatePicker } from '@shared/components/atoms/DatePickerInput/styles/DatePicker'
+import { StyledSign } from './Sign'
 
-const modifiers = {
-  right: () => css`
-    ${Label} {
-      order: 3;
-    }
-  `,
-}
-
-const StyledInputGroup = styled.div<{ modifiers?: string }>`
+const StyledInputGroup = styled.div`
   display: flex;
 
-  ${Label} {
+  ${StyledSign} {
     order: 1;
+    max-height: 36px;
+    box-sizing: border-box;
   }
 
-  ${StyledInput} {
+  ${Input}, > div {
     order: 2;
   }
 
-  ${applyStyleModifiers(modifiers)}
+  ${Input}, ${StyledDatePicker} {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
 `
 
 export { StyledInputGroup }
