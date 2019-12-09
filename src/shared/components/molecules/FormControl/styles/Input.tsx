@@ -7,6 +7,9 @@ const modifiers = {
   error: () => css`
     border-color: ${colors.error};
   `,
+  block: () => css`
+    width: 100%;
+  `,
 }
 
 const StyledInput = styled(Input)<{ modifiers?: string }>`

@@ -12,9 +12,10 @@ const StyledMain = styled.main`
   max-width: 960px;
   width: 100%;
   margin: 0 auto;
+  padding-top: 20px;
 `
 
-const SingleColumn: React.FC<SingleColumnProps> = ({
+const Default: React.FC<SingleColumnProps> = ({
   children,
   hasHeader = true,
   hasFooter = true,
@@ -26,4 +27,4 @@ const SingleColumn: React.FC<SingleColumnProps> = ({
   </Fragment>
 )
 
-export { SingleColumn }
+export { Default }

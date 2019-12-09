@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { SingleColumn } from '@shared/components/templates/SingleColumn'
+import { Default } from '@shared/components/templates/Default'
 import { Link } from '@shared/components/atoms/Link'
 import { GET_RECIPES } from '@shared/graphql/queries/recipes'
 import { Context } from '@shared/AppContext'
@@ -29,11 +29,11 @@ const Recipes: React.FC = () => {
   }
 
   return (
-    <SingleColumn>
+    <Default>
       <h1>Hello Recipes</h1>
       {renderRecipes(data.recipes)}
       <Link to="/new-recipe">new recipe</Link>
-    </SingleColumn>
+    </Default>
   )
 }
 

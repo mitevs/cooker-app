@@ -1,5 +1,5 @@
 import React from 'react'
-import { SingleColumn } from '@shared/components/templates/SingleColumn'
+import { SingleColumn } from '@shared/components/templates/Default'
 
 const Home: React.FC = () => (
   <SingleColumn>

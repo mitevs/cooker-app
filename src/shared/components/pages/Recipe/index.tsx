@@ -1,7 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
-import { SingleColumn } from '@shared/components/templates/SingleColumn'
+import { Default } from '@shared/components/templates/Default'
 import { GET_RECIPE } from '@shared/graphql/queries/recipes'
 
 interface RecipeData {
@@ -24,10 +24,10 @@ const Recipe: React.FC = () => {
       return <div>loading...</div>
     } else if (data) {
       return (
-        <SingleColumn>
+        <Default>
           <h1>{data.recipe.title}</h1>
           <p>{data.recipe.excerpt}</p>
-        </SingleColumn>
+        </Default>
       )
     } else {
       return <div>No data...</div>

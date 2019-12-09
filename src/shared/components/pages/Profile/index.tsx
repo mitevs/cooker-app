@@ -1,10 +1,10 @@
 import React from 'react'
-import { SingleColumn } from '@shared/components/templates/SingleColumn'
+import { Default } from '@shared/components/templates/Default'
 
 const Profile: React.FC = () => (
-  <SingleColumn>
+  <Default>
     <h1>Hello Profile</h1>
-  </SingleColumn>
+  </Default>
 )
 
 export default Profile
