@@ -1,10 +1,10 @@
 import React from 'react'
-import { SingleColumn } from '@shared/components/templates/Default'
+import { Default } from '@shared/components/templates/Default'
 
 const Home: React.FC = () => (
-  <SingleColumn>
+  <Default>
     <h1>Hello Home</h1>
-  </SingleColumn>
+  </Default>
 )
 
 export default Home

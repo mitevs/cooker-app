@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { colors, fontSize, sizes } from '@shared/style'
 
 // style component and remove this css import
-import 'react-datepicker/dist/react-datepicker.css'
+// import 'react-datepicker/dist/react-datepicker.css'
 
 export const StyledDatePicker = styled(DatePicker)`
   border: 1px solid ${colors.grayDark1};

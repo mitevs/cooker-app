@@ -1,7 +1,7 @@
 declare interface Base {
-  id?: string
-  createdOn?: Date
-  modifiedOn?: Date
+  id: string
+  createdOn: Date
+  modifiedOn: Date
 }
 
 declare interface User extends Base {
@@ -11,8 +11,26 @@ declare interface User extends Base {
   shortBio: string
 }
 
-declare interface Ingredient extends Base {
+declare interface Ingredient {
+  id: number
   name: string
+  baseUnit: string
+}
+
+declare interface Asset extends Base {
+  name: string
+  type: string
+  url: string
+}
+
+declare interface Step extends Base {
+  text: string
+  group?: string
+}
+
+declare interface RecipeIngredient {
+  name: string
+  quantity: number
   baseUnit: string
 }
 
@@ -21,10 +39,8 @@ declare interface Recipe extends Base {
   excerpt: string
   servings?: number
   prepTime?: number
-  nutritionFacts?: string
-  prepSteps?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  assets?: any[]
-  ingredients?: Ingredient[]
+  steps?: Step[]
+  assets?: Asset[]
+  ingredients?: RecipeIngredient[]
   author?: User
 }

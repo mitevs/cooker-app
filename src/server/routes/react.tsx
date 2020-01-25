@@ -20,7 +20,7 @@ router.get('*', async (ctx) => {
     const modules: string[] = []
     await Loadable.preloadReady()
 
-    const content = renderToString(
+    const content = await renderToString(
       sheet.collectStyles(
         <Loadable.Capture report={(moduleName) => modules.push(moduleName)}>
           <App ctx={ctx}></App>

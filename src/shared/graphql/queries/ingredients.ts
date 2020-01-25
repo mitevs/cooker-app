@@ -4,8 +4,6 @@ export const INGREDIENTS = gql`
   {
     ingredients {
       id
-      createdOn
-      modifiedOn
       name
       baseUnit
     }

@@ -22,18 +22,18 @@ export const GET_RECIPE = gql`
       excerpt
       servings
       prepTime
-      nutritionFacts
-      prepSteps
+      steps {
+        text
+        group
+      }
       assets {
         name
         type
         url
       }
       ingredients {
-        ingredient {
-          name
-          baseUnit
-        }
+        name
+        baseUnit
         quantity
       }
       author {
