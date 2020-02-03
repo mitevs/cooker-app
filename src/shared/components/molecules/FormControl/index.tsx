@@ -23,14 +23,14 @@ const FormControl: React.FC<FormControlProps> = ({
   onChange,
 }) => (
   <StyledFormControl>
-    <Label modifiers={error ? 'error' : undefined}>{label}</Label>
+    <Label error={!!error}>{label}</Label>
     <StyledInput
       id={id}
       name={name}
       type={type}
       onChange={onChange}
       value={value}
-      modifiers={error ? 'error' : undefined}
+      error={!!error}
     />
   </StyledFormControl>
 )

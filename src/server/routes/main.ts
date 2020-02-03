@@ -25,10 +25,10 @@ router.post('/login', async (ctx) => {
       },
     })
 
-    // eslint-disable-next-line require-atomic-updates
-    ctx.session['token'] = authToken
-    // eslint-disable-next-line require-atomic-updates
-    ctx.session['user'] = res2.data.me
+    // // eslint-disable-next-line require-atomic-updates
+    // ctx.session['token'] = authToken
+    // // eslint-disable-next-line require-atomic-updates
+    // ctx.session['user'] = res2.data.me
     // eslint-disable-next-line require-atomic-updates
     ctx.body = ctx.session['user']
   } catch (err) {

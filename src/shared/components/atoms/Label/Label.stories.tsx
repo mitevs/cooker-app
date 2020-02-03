@@ -6,7 +6,5 @@ import { Label } from '.'
 const stories = storiesOf('Atoms|Label', module)
 
 stories.add('Default', () => (
-  <Label modifiers={boolean('Error', false) ? 'error' : ''}>
-    {text('Label', 'Label')}
-  </Label>
+  <Label error={boolean('Error', false)}>{text('Label', 'Label')}</Label>
 ))

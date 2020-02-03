@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components'
-import { applyStyleModifiers } from 'styled-components-modifiers'
 
 const modifiers = {
   small: () => css`
@@ -14,14 +13,19 @@ const modifiers = {
       height: 32px;
     }
   `,
-  point: () => css`
+  pointer: () => css`
     &:hover svg {
       cursor: pointer;
     }
   `,
 }
 
-const StyledIcon = styled.i<{ modifiers?: string | string[] }>`
+export interface StyledIconProps {
+  size?: 'small' | 'big'
+  pointer?: boolean
+}
+
+const StyledIcon = styled.i<StyledIconProps>`
   display: inline-block;
   position: relative;
 
@@ -30,7 +34,8 @@ const StyledIcon = styled.i<{ modifiers?: string | string[] }>`
     height: 16px;
   }
 
-  ${applyStyleModifiers(modifiers)}
+  ${({ size = '' }) => (modifiers[size] ? modifiers[size]() : '')}
+  ${({ pointer = false }) => (pointer ? modifiers.pointer() : '')}
 `
 
 export { StyledIcon }

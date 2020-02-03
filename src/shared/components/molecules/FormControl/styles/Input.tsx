@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components'
 import { Input } from '@shared/components/atoms/Input'
-import { applyStyleModifiers } from 'styled-components-modifiers'
 import { colors } from '@shared/style'
 
 const modifiers = {
@@ -12,9 +11,16 @@ const modifiers = {
   `,
 }
 
-const StyledInput = styled(Input)<{ modifiers?: string }>`
+export interface StyledInputProps {
+  error?: boolean
+  block?: boolean
+}
+
+const StyledInput = styled(Input)<StyledInputProps>`
   width: 100%;
-  ${applyStyleModifiers(modifiers)}
+
+  ${({ error }) => (error ? modifiers.error() : '')}
+  ${({ block }) => (block ? modifiers.block() : '')}
 `
 
 export { StyledInput }

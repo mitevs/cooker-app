@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components'
-import { applyStyleModifiers } from 'styled-components-modifiers'
 
 const modifiers = {
   right: () => css`
@@ -7,7 +6,11 @@ const modifiers = {
   `,
 }
 
-const StyledList = styled.ul<{ modifiers?: string | string[] }>`
+export interface StyledListProps {
+  right?: boolean
+}
+
+const StyledList = styled.ul<StyledListProps>`
   padding: 0;
   margin: 0;
   list-style: none;
@@ -16,7 +19,7 @@ const StyledList = styled.ul<{ modifiers?: string | string[] }>`
     display: inline-block;
   }
 
-  ${applyStyleModifiers(modifiers)}
+  ${({ right }) => (right ? modifiers.right() : '')}
 `
 
 export { StyledList }

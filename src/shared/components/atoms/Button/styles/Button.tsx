@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components'
 import { colors, sizes } from '@shared/style'
 import { darken, linearGradient, lighten } from 'polished'
-import { applyStyleModifiers } from 'styled-components-modifiers'
 
 const modifiers = {
   primary: () => css`
@@ -34,7 +33,11 @@ const modifiers = {
   `,
 }
 
-const StyledButton = styled.button<{ modifiers?: string }>`
+export interface StyledButtonProps {
+  buttonStyle?: 'primary'
+}
+
+const StyledButton = styled.button<StyledButtonProps>`
   border-radius: ${sizes.borderRadius};
   padding: 10px;
   text-decoration: none;
@@ -52,7 +55,8 @@ const StyledButton = styled.button<{ modifiers?: string }>`
     cursor: not-allowed;
   }
 
-  ${applyStyleModifiers(modifiers)}
+  ${({ buttonStyle = '' }) =>
+    modifiers[buttonStyle] ? modifiers[buttonStyle]() : ''}
 `
 
 export { StyledButton }

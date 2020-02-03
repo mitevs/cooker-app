@@ -9,10 +9,10 @@ const stories = storiesOf('Atoms|Button', module)
 stories.add('Default', () => (
   <Button
     onClick={action('click')}
-    modifiers={select(
-      'Modifiers',
+    buttonStyle={select(
+      'Button Style',
       {
-        None: '',
+        None: undefined,
         Primary: 'primary',
       },
       'primary'

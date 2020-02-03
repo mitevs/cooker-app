@@ -10,7 +10,8 @@ export enum IconType {
 
 export interface IconProps {
   type: IconType
-  modifiers?: string | string[]
+  size?: 'small' | 'big'
+  pointer?: boolean
   onClick?: (e?: React.MouseEvent) => void
   className?: string
 }
@@ -20,11 +21,21 @@ const ICON_MAP = {
   [IconType.arrowDown]: ArrowDown,
 }
 
-const Icon: React.FC<IconProps> = ({ type, modifiers, onClick, className }) => {
+const Icon: React.FC<IconProps> = ({
+  type,
+  size,
+  pointer,
+  onClick,
+  className,
+}) => {
   const SvgIcon = ICON_MAP[type]
 
   return (
-    <StyledIcon className={className} modifiers={modifiers} onClick={onClick}>
+    <StyledIcon
+      className={className}
+      size={size}
+      pointer={pointer}
+      onClick={onClick}>
       <SvgIcon></SvgIcon>
     </StyledIcon>
   )

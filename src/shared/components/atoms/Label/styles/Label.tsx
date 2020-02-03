@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components'
 import { colors, fontSize } from '@shared/style'
-import { applyStyleModifiers } from 'styled-components-modifiers'
 
 const modifiers = {
   error: () => css`
@@ -8,12 +7,17 @@ const modifiers = {
   `,
 }
 
-const StyledLabel = styled.label<{ modifiers?: string }>`
+export interface StyledLabelProps {
+  error?: boolean
+}
+
+const StyledLabel = styled.label<StyledLabelProps>`
   display: inline-block;
   color: ${colors.grayDark};
   margin-bottom: 5px;
   font-size: ${fontSize.base};
-  ${applyStyleModifiers(modifiers)}
+
+  ${({ error }) => (error ? modifiers.error() : '')}
 `
 
 export { StyledLabel }

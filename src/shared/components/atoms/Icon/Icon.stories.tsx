@@ -12,14 +12,14 @@ stories.add('Default', () => (
       [IconType.arrowDown, IconType.arrowUp],
       IconType.arrowUp
     )}
-    modifiers={select(
+    size={select(
       'Size',
       {
-        Normal: '',
+        Normal: undefined,
         Small: 'small',
         Big: 'big',
       },
-      ''
+      undefined
     )}
   />
 ))

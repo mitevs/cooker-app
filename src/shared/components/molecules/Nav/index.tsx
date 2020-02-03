@@ -5,7 +5,7 @@ const Nav: React.FC = ({ children }) => (
   <nav>
     {/* add nav left */}
 
-    <StyledList modifiers="right">
+    <StyledList right={true}>
       {React.Children.map(children, (child) => (
         <li>{child}</li>
       ))}
