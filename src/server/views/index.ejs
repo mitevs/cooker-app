@@ -27,7 +27,7 @@
 
     <script>
         window.APP = {
-            <% if (user) { %>USER: <%- JSON.stringify(user) %>,<% } %>
+            <% if (typeof user !== 'undefined') { %>USER: <%- JSON.stringify(user) %>,<% } %>
             STATE: <%- JSON.stringify(state) %>
         };
     </script>

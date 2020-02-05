@@ -6,7 +6,7 @@ import { Button } from '@shared/components/atoms/Button'
 import { Context } from '@shared/AppContext'
 
 const LoginForm: React.FC = () => {
-  const ctx = useContext(Context)
+  const ctx = useContext<AppContext>(Context)
 
   const [user, setUser] = useState({
     username: '',
@@ -20,7 +20,6 @@ const LoginForm: React.FC = () => {
 
     try {
       const res = await axios.post('/login', { ...user })
-      console.log(res)
       ctx.setUser(res.data)
       setShouldRedirect(true)
     } catch (err) {

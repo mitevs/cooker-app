@@ -2,20 +2,21 @@
 import Koa from 'koa'
 import htmlMinify from 'koa-html-minifier'
 import bodyParser from 'koa-bodyparser'
+import cookie from 'koa-cookie'
 import serve from 'koa-static'
 import mount from 'koa-mount'
 import render from 'koa-ejs'
 import { join } from 'path'
 import routes from './routes'
-import session from 'koa-session'
 import pino from 'koa-pino-logger'
 import compress from 'koa-compress'
 import config from '@server/config'
+import client from '@server/graphql/client'
+import { ME } from '@shared/graphql/queries/users'
 
 const app = new Koa()
 
-app.keys = ['e1234123']
-
+app.use(cookie())
 app.use(
   compress({
     threshold: 2048,
@@ -24,7 +25,6 @@ app.use(
 )
 
 app.use(bodyParser())
-app.use(session(app))
 app.use(
   pino({
     enabled: true,
@@ -36,7 +36,22 @@ app.use(
 // locals
 app.use(async (ctx, next) => {
   ctx.state.cdnUrl = config.cdnUrl
-  ctx.state.user = ctx.session.user
+
+  const authToken = ctx.cookies.get('token')
+
+  if (authToken) {
+    const res2 = await client.query({
+      query: ME,
+      context: {
+        headers: {
+          Authorization: authToken,
+        },
+      },
+    })
+
+    ctx.state.user = res2.data.me
+  }
+
   await next()
 })
 
