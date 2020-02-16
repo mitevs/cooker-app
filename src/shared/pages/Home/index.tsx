@@ -1,5 +1,5 @@
 import React from 'react'
-import { Default } from '@shared/components/templates/Default'
+import { Default } from '@shared/templates/Default'
 
 const Home: React.FC = () => (
   <Default>

@@ -9,7 +9,7 @@ router.post('/login', async (ctx) => {
   const { username, password } = ctx.request.body
 
   try {
-    const res = await axios.post('http://localhost:8080/token', {
+    const res = await axios.post('http://localhost:8080/api/v1/token', {
       username,
       password,
     })

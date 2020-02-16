@@ -1,5 +1,5 @@
 import Loadable from 'react-loadable'
-import Loading from '@shared/components/pages/Loading'
+import Loading from '@shared/components/containers/Loading'
 
 export default [
   {
@@ -8,7 +8,7 @@ export default [
       loader: () =>
         import(
           /* webpackChunkName: "recipes" */
-          '@shared/components/pages/Recipes'
+          '@shared/pages/Recipes'
         ),
       loading: Loading,
     }),
@@ -19,7 +19,7 @@ export default [
       loader: () =>
         import(
           /* webpackChunkName: "recipe" */
-          '@shared/components/pages/Recipe'
+          '@shared/pages/Recipe'
         ),
       loading: Loading,
     }),
@@ -30,7 +30,7 @@ export default [
       loader: () =>
         import(
           /* webpackChunkName: "new-recipe" */
-          '@shared/components/pages/NewRecipe'
+          '@shared/pages/NewRecipe'
         ),
       loading: Loading,
     }),

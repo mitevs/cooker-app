@@ -3,10 +3,10 @@ import axios from 'axios'
 import { Redirect } from 'react-router'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { Context } from '@shared/AppContext'
+import { Default } from '@shared/templates/Default'
 import { INGREDIENTS } from '@shared/graphql/queries/ingredients'
 import { GET_RECIPES } from '@shared/graphql/queries/recipes'
 import { CREATE_RECIPE } from '@shared/graphql/mutations/recipes'
-import { Default } from '@shared/components/templates/Default'
 import {
   TwoColumn,
   LeftColumn,

@@ -1,5 +1,5 @@
 import Loadable from 'react-loadable'
-import Loading from '@shared/components/pages/Loading'
+import Loading from '@shared/components/containers/Loading'
 
 export default [
   {
@@ -9,7 +9,7 @@ export default [
       loader: () =>
         import(
           /* webpackChunkName: "home" */
-          '@shared/components/pages/Home'
+          '@shared/pages/Home'
         ),
       loading: Loading,
     }),
@@ -20,7 +20,7 @@ export default [
       loader: () =>
         import(
           /* webpackChunkName: "login" */
-          '@shared/components/pages/Login'
+          '@shared/pages/Login'
         ),
       loading: Loading,
     }),
@@ -31,7 +31,7 @@ export default [
       loader: () =>
         import(
           /* webpackChunkName: "profile" */
-          '@shared/components/pages/Profile'
+          '@shared/pages/Profile'
         ),
       loading: Loading,
     }),
@@ -42,7 +42,7 @@ export default [
       loader: () =>
         import(
           /* webpackChunkName: "register" */
-          '@shared/components/pages/Register'
+          '@shared/pages/Register'
         ),
       loading: Loading,
     }),

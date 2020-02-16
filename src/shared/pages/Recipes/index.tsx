@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { Default } from '@shared/components/templates/Default'
+import { Default } from '@shared/templates/Default'
 import { Link } from '@shared/components/atoms/Link'
 import { GET_RECIPES } from '@shared/graphql/queries/recipes'
 import { Context } from '@shared/AppContext'

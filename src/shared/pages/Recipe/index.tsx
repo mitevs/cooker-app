@@ -1,7 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
-import { Default } from '@shared/components/templates/Default'
+import { Default } from '@shared/templates/Default'
 import { GET_RECIPE } from '@shared/graphql/queries/recipes'
 
 interface RecipeData {
