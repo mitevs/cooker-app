@@ -1,21 +1,28 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { FC, HTMLAttributes } from 'react'
+import clsx from 'clsx'
+import useStyles from 'isomorphic-style-loader/useStyles'
+import styles from './styles.scss'
 
-const StyledTwoColumn = styled.div`
-  display: grid;
-  grid-column-gap: 15px;
-  grid-template-columns: 1fr 1fr;
-`
+export const LeftColumn: FC<HTMLAttributes<HTMLDivElement>> = ({
+  children,
+  ...props
+}) => <div {...props}>{children}</div>
 
-const LeftColumn: React.FC = ({ children }) => <div>{children}</div>
-const RightColumn: React.FC = ({ children }) => <div>{children}</div>
+export const RightColumn: FC<HTMLAttributes<HTMLDivElement>> = ({
+  children,
+  ...props
+}) => <div {...props}>{children}</div>
 
-const TwoColumn: React.FC & {
-  Left: React.FunctionComponent
-  Right: React.FunctionComponent
-} = ({ children }) => <StyledTwoColumn>{children}</StyledTwoColumn>
+export const TwoColumn: FC<HTMLAttributes<HTMLDivElement>> = ({
+  children,
+  className,
+  ...props
+}) => {
+  useStyles(styles)
 
-TwoColumn.Left = LeftColumn
-TwoColumn.Right = RightColumn
-
-export { TwoColumn }
+  return (
+    <div className={clsx(styles.twoColumn, className)} {...props}>
+      {children}
+    </div>
+  )
+}

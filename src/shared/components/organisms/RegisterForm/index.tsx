@@ -1,11 +1,11 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react'
+import React, { FC, useState, FormEvent } from 'react'
 import { Redirect } from 'react-router'
 import { useMutation } from '@apollo/react-hooks'
 import { CREATE_USER } from '@shared/graphql/mutations/users'
 import { Button } from '@shared/components/atoms/Button'
 import { FormControl } from '@shared/components/molecules/FormControl'
 
-const RegisterForm: React.FC = () => {
+const RegisterForm: FC = () => {
   const [shouldRedirect, setShouldRedirect] = useState(false)
 
   const [user, setUser] = useState({
@@ -34,7 +34,7 @@ const RegisterForm: React.FC = () => {
     }
   }
 
-  const onSubmit = async (e: FormEvent): void => {
+  const onSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault()
 
     try {
@@ -82,7 +82,9 @@ const RegisterForm: React.FC = () => {
           value={user.password}
         />
 
-        <Button disabled={!isValidForm()}>Register</Button>
+        <Button buttonStyle="primary" disabled={!isValidForm()}>
+          Register
+        </Button>
       </form>
     )
   }

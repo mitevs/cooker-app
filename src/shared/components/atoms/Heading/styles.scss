@@ -1,0 +1,25 @@
+@import 'vars';
+
+.h1 {
+  font-size: $fontSize--xxl;
+}
+
+.h2 {
+  font-size: $fontSize--xl;
+}
+
+.h3 {
+  font-size: $fontSize--lg;
+}
+
+.h4 {
+  font-size: $fontSize--md;
+}
+
+.h5 {
+  font-size: $fontSize--sm;
+}
+
+.h6 {
+  font-size: $fontSize--xs;
+}

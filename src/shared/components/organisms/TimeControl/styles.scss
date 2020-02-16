@@ -1,0 +1,36 @@
+@import 'vars';
+
+.timeControl {
+  display: flex;
+}
+
+.icon {
+  display: block;
+  max-width: 32px;
+  margin: 0 auto;
+
+  svg {
+    fill: $color--error;
+  }
+
+  &:hover svg {
+    fill: initial;
+  }
+}
+
+.timeGroup {
+  &:first-child {
+    margin-right: 10px;
+  }
+
+  // ${StyledIcon} {
+  //   opacity: 0;
+  //   transition: opacity 0.3s;
+  // }
+
+  // &:hover {
+  //   ${StyledIcon} {
+  //     opacity: 1;
+  //   }
+  // }
+}

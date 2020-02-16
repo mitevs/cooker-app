@@ -8,9 +8,9 @@ const stories = storiesOf('Molecules|Nav', module)
 stories.add('Default', () => {
   return (
     <Nav>
-      <Link href="#">Link 1</Link>
-      <Link href="#">Link 2</Link>
-      <Link href="#">Link 3</Link>
+      <Link to="#">Link 1</Link>
+      <Link to="#">Link 2</Link>
+      <Link to="#">Link 3</Link>
     </Nav>
   )
 })

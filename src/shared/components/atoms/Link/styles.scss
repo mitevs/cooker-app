@@ -1,0 +1,13 @@
+@import 'vars';
+
+.link {
+  padding: 10px;
+  color: $color--grayDark;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover,
+  &.active {
+    color: red;
+  }
+}

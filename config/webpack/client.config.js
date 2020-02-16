@@ -16,7 +16,7 @@ const isAnalyze = process.env.ANALYZE === 'true'
 const config = merge(baseConfig(appConfig.client), {
   target: 'web',
   entry: {
-    main: path.resolve(__dirname, clientSrc, 'index.tsx'),
+    main: path.resolve(__dirname, clientSrc, 'index.ts'),
   },
   output: {
     path: path.resolve(__dirname, outDir, 'public'),
@@ -24,6 +24,34 @@ const config = merge(baseConfig(appConfig.client), {
     chunkFilename: '[name].js',
     publicPath: `${appConfig.server.get('cdnUrl')}/`,
   },
+  // module: {
+  //   rules: [
+  //     {
+  //       test: /\.scss$/i,
+  //       exclude: /node_modules/,
+  //       use: [
+  //         'style-loader',
+  //         {
+  //           loader: 'css-loader',
+  //           options: {
+  //             importLoaders: 1,
+  //             modules: true,
+  //           },
+  //         },
+  //         {
+  //           loader: 'sass-loader',
+  //           options: {
+  //             sassOptions: {
+  //               includePaths: [
+  //                 path.resolve(__dirname, '../../src/shared/styles'),
+  //               ],
+  //             },
+  //           },
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
   optimization: {
     sideEffects: false,
     usedExports: true,

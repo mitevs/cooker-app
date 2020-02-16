@@ -1,4 +1,5 @@
 /*eslint-env node*/
+import { join } from 'path'
 import Koa from 'koa'
 import htmlMinify from 'koa-html-minifier'
 import bodyParser from 'koa-bodyparser'
@@ -6,13 +7,12 @@ import cookie from 'koa-cookie'
 import serve from 'koa-static'
 import mount from 'koa-mount'
 import render from 'koa-ejs'
-import { join } from 'path'
-import routes from './routes'
 import pino from 'koa-pino-logger'
 import compress from 'koa-compress'
-import config from '@server/config'
-import client from '@server/graphql/client'
+import config from '@shared/config'
 import { ME } from '@shared/graphql/queries/users'
+import routes from '@server/routes'
+import client from '@server/graphql/client'
 
 const app = new Koa()
 
@@ -65,6 +65,6 @@ render(app, {
 
 app.use(htmlMinify())
 app.use(mount('/public', serve(join(__dirname, '/public'))))
-routes.forEach((router) => app.use(router.routes()))
+app.use(routes())
 
 export default app

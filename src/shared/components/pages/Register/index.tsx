@@ -1,11 +1,11 @@
 import React from 'react'
-import { Headline } from '@shared/components/atoms/Headline'
+import { Heading } from '@shared/components/atoms/Heading'
 import { Default } from '@shared/components/templates/Default'
 import { RegisterForm } from '@shared/components/organisms/RegisterForm'
 
 const Register: React.FC = () => (
   <Default hasHeader={false} hasFooter={false}>
-    <Headline>Register Account</Headline>
+    <Heading>Register Account</Heading>
     <RegisterForm></RegisterForm>
   </Default>
 )

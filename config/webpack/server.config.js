@@ -12,12 +12,20 @@ const outDir = '../../dist'
 const config = merge(baseConfig(appConfig, true), {
   target: 'node',
   entry: {
-    server: [path.resolve(__dirname, serverSrc, 'index.tsx')],
+    server: [path.resolve(__dirname, serverSrc, 'index.ts')],
   },
   output: {
     path: path.resolve(__dirname, outDir),
     filename: '[name].js',
   },
+  // module: {
+  //   rules: [
+  //     {
+  //       test: /\.scss$/i,
+  //       loader: 'ignore-loader'
+  //     }
+  //   ]
+  // },
   node: {
     __dirname: false,
     __filename: false,
@@ -48,6 +56,8 @@ if (config.mode === 'development') {
   config.plugins.push(
     new StartServerPlugin({
       name: 'server.js',
+      nodeArgs: ['--inspect'],
+      // signal: 'SIGUSR2'
     })
   )
 }

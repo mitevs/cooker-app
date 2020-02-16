@@ -1,16 +1,19 @@
-import React from 'react'
-import { StyledList } from './styles/List'
+import React, { FC } from 'react'
+import useStyles from 'isomorphic-style-loader/useStyles'
+import styles from './styles.scss'
 
-const Nav: React.FC = ({ children }) => (
-  <nav>
-    {/* add nav left */}
+export const Nav: FC = ({ children }) => {
+  useStyles(styles)
 
-    <StyledList right={true}>
-      {React.Children.map(children, (child) => (
-        <li>{child}</li>
-      ))}
-    </StyledList>
-  </nav>
-)
+  return (
+    <nav>
+      {/* add nav left */}
 
-export { Nav }
+      <ul className={styles.navRight}>
+        {React.Children.map(children, (child) => (
+          <li>{child}</li>
+        ))}
+      </ul>
+    </nav>
+  )
+}

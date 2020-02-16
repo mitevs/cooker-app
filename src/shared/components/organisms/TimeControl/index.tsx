@@ -1,61 +1,68 @@
-import React from 'react'
+import React, { FC } from 'react'
+import { Icon, IconType } from '@shared/components/atoms/Icon'
 import { InputGroup } from '@shared/components/molecules/InputGroup'
-import { IconType } from '@shared/components/atoms/Icon'
-import { StyledTimeControl } from './styles/TimeControl'
-import { StyledTimeGroup } from './styles/TimeGroup'
-import { StyledIcon } from './styles/Icon'
 import { parseNumber } from '@shared/utils/parsers'
 import { useClock } from './hooks/useClock'
+import useStyles from 'isomorphic-style-loader/useStyles'
+import styles from './styles.scss'
 
 export interface TimePickerProps {
   h?: number
   m?: number
 }
 
-const TimeControl: React.FC<TimePickerProps> = ({ h = 0, m = 0 }) => {
+export const TimeControl: FC<TimePickerProps> = ({ h = 0, m = 0 }) => {
+  useStyles(styles)
+
   const { hours, minutes, setHours, setMinutes } = useClock(h, m)
 
   return (
-    <StyledTimeControl>
-      <StyledTimeGroup>
-        <StyledIcon
+    <div className={styles.timeControl}>
+      <div className={styles.timeGroup}>
+        <Icon
+          className={styles.icon}
           type={IconType.arrowUp}
-          modifiers={['big', 'point']}
+          size="big"
+          pointer={true}
           onClick={() => setHours(hours + 1)}
         />
-        <InputGroup
+        {/* <InputGroup
           label="H"
           value={hours}
           onChange={({ target: { value } }) => setHours(parseNumber(value, h))}
-        />
-        <StyledIcon
+        /> */}
+        <Icon
+          className={styles.icon}
           type={IconType.arrowDown}
-          modifiers={['big', 'point']}
+          size="big"
+          pointer={true}
           onClick={() => setHours(hours - 1)}
         />
-      </StyledTimeGroup>
+      </div>
 
-      <StyledTimeGroup>
-        <StyledIcon
+      <div className={styles.timeGroup}>
+        <Icon
+          className={styles.icon}
           type={IconType.arrowUp}
-          modifiers={['big', 'point']}
+          size="big"
+          pointer={true}
           onClick={() => setMinutes(minutes + 1)}
         />
-        <InputGroup
+        {/* <InputGroup
           label="M"
           value={minutes}
           onChange={({ target: { value } }) =>
             setMinutes(parseNumber(value, minutes))
           }
-        />
-        <StyledIcon
+        /> */}
+        <Icon
+          className={styles.icon}
           type={IconType.arrowDown}
-          modifiers={['big', 'point']}
+          size="big"
+          pointer={true}
           onClick={() => setMinutes(minutes - 1)}
         />
-      </StyledTimeGroup>
-    </StyledTimeControl>
+      </div>
+    </div>
   )
 }
-
-export { TimeControl }

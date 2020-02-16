@@ -1,3 +1,4 @@
+const clientConfig = require('../webpack/client.config')
 const path = require('path')
 const pathToInlineSvg = path.resolve(
   __dirname,
@@ -11,31 +12,49 @@ module.exports = ({ config }) => {
   const fileLoaderRule = rules.find((rule) => rule.test.test('.svg'))
   fileLoaderRule.exclude = pathToInlineSvg
 
-  rules.push({
-    test: /\.svg$/,
-    include: pathToInlineSvg,
-    use: [
-      {
-        loader: '@svgr/webpack',
-        options: {
-          icon: true,
-        },
-      },
-    ],
-  })
+  rules.push(...clientConfig.module.rules)
+  config.resolve.extensions.push(...clientConfig.resolve.extensions)
 
-  rules.push({
-    test: /\.(ts|tsx)$/,
-    use: [
-      {
-        loader: 'babel-loader',
-      },
-      {
-        loader: 'react-docgen-typescript-loader',
-      },
-    ],
-  })
+  // rules.push({
+  //   test: /\.svg$/,
+  //   include: pathToInlineSvg,
+  //   use: [
+  //     {
+  //       loader: '@svgr/webpack',
+  //       options: {
+  //         icon: true,
+  //       },
+  //     },
+  //   ],
+  // })
 
-  config.resolve.extensions.push('.ts', '.tsx', '.svg')
+  // rules.push({
+  //   test: /\.(ts|tsx)$/,
+  //   use: [
+  //     {
+  //       loader: 'babel-loader',
+  //     },
+  //     {
+  //       loader: 'react-docgen-typescript-loader',
+  //     },
+  //   ],
+  // })
+
+  // rules.push({
+  //   test: /\.scss$/i,
+  //   exclude: /node_modules/,
+  //   use: [
+  //     'style-loader',
+  //     {
+  //       loader: 'css-loader',
+  //       options: {
+  //         modules: true,
+  //       },
+  //     },
+  //     'sass-loader',
+  //   ],
+  // })
+
+  // config.resolve.extensions.push('.ts', '.tsx', '.svg')
   return config
 }

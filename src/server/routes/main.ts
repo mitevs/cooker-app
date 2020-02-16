@@ -2,9 +2,8 @@ import axios from 'axios'
 import Router from 'koa-router'
 import { ME } from '@shared/graphql/queries/users'
 import client from '@server/graphql/client'
-import { ContextSession } from 'koa-session'
 
-const router = new Router<{}, ContextSession>()
+const router = new Router()
 
 router.post('/login', async (ctx) => {
   const { username, password } = ctx.request.body
@@ -27,7 +26,7 @@ router.post('/login', async (ctx) => {
     })
 
     ctx.cookies.set('token', authToken)
-    ctx.body = res2.data.me
+    ctx.body = { user: res2.data.me }
   } catch (err) {
     console.log('error ', err)
     // eslint-disable-next-line require-atomic-updates

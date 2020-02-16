@@ -1,4 +1,5 @@
 const webpack = require('webpack')
+const path = require('path')
 
 const env = process.env.NODE_ENV || 'development'
 
@@ -14,6 +15,30 @@ const getConfig = (appConfig, isServer = false) => {
         {
           test: /\.svg$/,
           use: ['@svgr/webpack'],
+        },
+        {
+          test: /\.scss$/i,
+          exclude: /node_modules/,
+          use: [
+            'isomorphic-style-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1,
+                modules: true,
+              },
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                sassOptions: {
+                  includePaths: [
+                    path.resolve(__dirname, '../../src/shared/styles'),
+                  ],
+                },
+              },
+            },
+          ],
         },
       ],
     },

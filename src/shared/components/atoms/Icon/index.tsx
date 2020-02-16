@@ -1,5 +1,9 @@
-import React from 'react'
-import { StyledIcon } from './styles/Icon'
+import React, { HTMLAttributes } from 'react'
+import clsx from 'clsx'
+import useStyles from 'isomorphic-style-loader/useStyles'
+import styles from './styles.scss'
+
+// Icons
 import ArrowUp from './svg/arrow-up.svg'
 import ArrowDown from './svg/arrow-down.svg'
 
@@ -8,12 +12,10 @@ export enum IconType {
   arrowDown = 'arrow-down',
 }
 
-export interface IconProps {
+export interface IconProps extends HTMLAttributes<HTMLElement> {
   type: IconType
   size?: 'small' | 'big'
   pointer?: boolean
-  onClick?: (e?: React.MouseEvent) => void
-  className?: string
 }
 
 const ICON_MAP = {
@@ -21,24 +23,26 @@ const ICON_MAP = {
   [IconType.arrowDown]: ArrowDown,
 }
 
-const Icon: React.FC<IconProps> = ({
+export const Icon: React.FC<IconProps> = ({
   type,
   size,
   pointer,
-  onClick,
   className,
+  ...props
 }) => {
+  useStyles(styles)
   const SvgIcon = ICON_MAP[type]
 
   return (
-    <StyledIcon
-      className={className}
-      size={size}
-      pointer={pointer}
-      onClick={onClick}>
+    <i
+      className={clsx(
+        styles.icon,
+        size && styles[size],
+        pointer && styles.pointer,
+        className
+      )}
+      {...props}>
       <SvgIcon></SvgIcon>
-    </StyledIcon>
+    </i>
   )
 }
-
-export { Icon }

@@ -1,0 +1,31 @@
+@import 'vars';
+
+.inputGroup {
+  display: flex;
+
+  .sign {
+    order: 1;
+    max-height: 36px;
+    box-sizing: border-box;
+  }
+
+  .input > div {
+    order: 2;
+  }
+
+  .input {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+.sign {
+  background: $color--gray;
+  text-align: center;
+  border: 1px solid $color--grayDark1;
+  border-right: 0;
+  border-top-left-radius: $borderRadius;
+  border-bottom-left-radius: $borderRadius;
+  padding: $padding--base #{$padding--base * 2};
+  margin: 0;
+}

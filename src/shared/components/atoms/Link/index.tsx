@@ -1,43 +1,23 @@
-import React, { MouseEvent } from 'react'
+import React, { FC } from 'react'
+import clsx from 'clsx'
 import {
-  StyledRouterLink,
-  StyledLink,
-  StyledLinkPlaceholder,
-} from './styles/Link'
+  Link as RouterLink,
+  LinkProps as RouterLinkProps,
+} from 'react-router-dom'
 
-type LinkProps = {
-  href?: string
-  to?: string
-  onClick?: (e: MouseEvent) => void
-  className?: string
-}
+import useStyles from 'isomorphic-style-loader/useStyles'
+import styles from './styles.scss'
 
-const Link: React.FC<LinkProps> = ({
-  to,
-  href,
+export const Link: FC<RouterLinkProps> = ({
   children,
-  onClick,
   className,
+  ...props
 }) => {
-  if (to) {
-    return (
-      <StyledRouterLink className={className} to={to} onClick={onClick}>
-        {children}
-      </StyledRouterLink>
-    )
-  } else if (href) {
-    return (
-      <StyledLink className={className} href={href} onClick={onClick}>
-        {children}
-      </StyledLink>
-    )
-  } else {
-    return (
-      <StyledLinkPlaceholder className={className} onClick={onClick}>
-        {children}
-      </StyledLinkPlaceholder>
-    )
-  }
-}
+  useStyles(styles)
 
-export { Link }
+  return (
+    <RouterLink {...props} className={clsx(styles.link, className)}>
+      {children}
+    </RouterLink>
+  )
+}

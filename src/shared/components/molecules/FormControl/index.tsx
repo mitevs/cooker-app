@@ -1,38 +1,28 @@
-import React, { ChangeEvent } from 'react'
+import React, { FC, InputHTMLAttributes } from 'react'
+import clsx from 'clsx'
 import { Label } from '@shared/components/atoms/Label'
-import { StyledFormControl } from './styles/FormControl'
-import { StyledInput } from './styles/Input'
+import { Input } from '@shared/components/atoms/Input'
+import useStyles from 'isomorphic-style-loader/useStyles'
+import styles from './styles.scss'
 
-interface FormControlProps {
-  id?: string
-  name?: string
-  type?: string
+export interface FormControlProps
+  extends InputHTMLAttributes<HTMLInputElement> {
   label: string
-  value?: string | number
   error?: string
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const FormControl: React.FC<FormControlProps> = ({
-  id,
-  name,
-  type = 'text',
+export const FormControl: FC<FormControlProps> = ({
   label,
-  value,
   error,
-  onChange,
-}) => (
-  <StyledFormControl>
-    <Label error={!!error}>{label}</Label>
-    <StyledInput
-      id={id}
-      name={name}
-      type={type}
-      onChange={onChange}
-      value={value}
-      error={!!error}
-    />
-  </StyledFormControl>
-)
+  className,
+  ...props
+}) => {
+  useStyles(styles)
 
-export { FormControl }
+  return (
+    <div className={clsx(styles.formControl, className)}>
+      <Label error={!!error}>{label}</Label>
+      <Input className={clsx(styles.input, error && styles.error)} {...props} />
+    </div>
+  )
+}

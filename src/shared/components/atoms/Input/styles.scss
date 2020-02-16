@@ -1,0 +1,13 @@
+@import 'vars';
+
+.input {
+  border: 1px solid $color--grayDark1;
+  border-radius: $borderRadius;
+  background: $color--white;
+  color: $color--grayDark;
+  padding: $padding--base;
+  font-size: $fontSize--base;
+  box-sizing: border-box;
+  outline: none;
+  max-width: 100%;
+}

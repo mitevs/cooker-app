@@ -1,21 +1,22 @@
-import React, { useContext } from 'react'
+import React, { FC, useContext } from 'react'
 import { Context } from '@shared/AppContext'
 import { Nav } from '@shared/components/molecules/Nav'
 import { Link } from '@shared/components/atoms/Link'
-import { StyledHeader } from './styles/Header'
-import { StyledContainer } from './styles/Container'
+import useStyles from 'isomorphic-style-loader/useStyles'
+import styles from './styles.scss'
 
-const Header: React.FC = () => {
+export const Header: FC = () => {
+  useStyles(styles)
   const { user } = useContext(Context)
 
   return (
-    <StyledHeader>
-      <StyledContainer>
+    <div className={styles.header}>
+      <div className={styles.container}>
         {user ? (
           <Nav>
             <Link to="/recipes">recipes</Link>
             <Link to="/profile">profile</Link>
-            <Link href="/logout">logout</Link>
+            <Link to="/logout">logout</Link>
           </Nav>
         ) : (
           <Nav>
@@ -23,9 +24,7 @@ const Header: React.FC = () => {
             <Link to="/login">login</Link>
           </Nav>
         )}
-      </StyledContainer>
-    </StyledHeader>
+      </div>
+    </div>
   )
 }
-
-export { Header }

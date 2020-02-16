@@ -1,11 +1,11 @@
-import React, { useState, useContext, FormEvent } from 'react'
 import axios from 'axios'
+import React, { FC, useState, useContext, FormEvent } from 'react'
 import { Redirect } from 'react-router'
 import { FormControl } from '@shared/components/molecules/FormControl'
 import { Button } from '@shared/components/atoms/Button'
 import { Context } from '@shared/AppContext'
 
-const LoginForm: React.FC = () => {
+const LoginForm: FC = () => {
   const ctx = useContext<AppContext>(Context)
 
   const [user, setUser] = useState({
@@ -53,7 +53,7 @@ const LoginForm: React.FC = () => {
             value={user.password}
             onChange={onChange}
           />
-          <Button type="submit" modifiers="primary">
+          <Button type="submit" buttonStyle="primary">
             Login
           </Button>
         </form>

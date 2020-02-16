@@ -1,12 +1,12 @@
 import React from 'react'
 import Router from 'koa-router'
 import { renderToString } from 'react-dom/server'
-import client from '@server/graphql/client'
-import App from '@server/App'
-import { ServerStyleSheet } from 'styled-components'
 import Loadable from 'react-loadable'
 import { Context } from 'koa'
 import { getBundles } from 'react-loadable/webpack'
+import client from '@server/graphql/client'
+import App from '@server/react/App'
+import StyleContext from 'isomorphic-style-loader/StyleContext'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const stats = require('../../../dist/react-loadable.json')
@@ -14,25 +14,25 @@ const stats = require('../../../dist/react-loadable.json')
 const router = new Router<{}, Context>()
 
 router.get('*', async (ctx) => {
-  const sheet = new ServerStyleSheet()
-
   try {
     const modules: string[] = []
     await Loadable.preloadReady()
 
-    const content = await renderToString(
-      sheet.collectStyles(
-        <Loadable.Capture report={(moduleName) => modules.push(moduleName)}>
-          <App ctx={ctx}></App>
-        </Loadable.Capture>
-      )
-    )
+    const css = new Set()
+    const insertCss = (...styles): void =>
+      styles.forEach((style) => css.add(style._getCss()))
 
-    sheet.seal()
+    const content = await renderToString(
+      <Loadable.Capture report={(moduleName) => modules.push(moduleName)}>
+        <StyleContext.Provider value={{ insertCss }}>
+          <App ctx={ctx}></App>
+        </StyleContext.Provider>
+      </Loadable.Capture>
+    )
 
     await ctx.render('index', {
       content,
-      stylesheets: sheet.getStyleTags(),
+      styles: [...css].join(''),
       state: client.extract(),
       preloadedBundles: getBundles(stats, modules),
     })

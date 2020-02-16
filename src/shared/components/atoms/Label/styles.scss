@@ -1,0 +1,12 @@
+@import 'vars';
+
+.label {
+  display: inline-block;
+  color: $color--grayDark;
+  margin-bottom: 5px;
+  font-size: $fontSize--base;
+}
+
+.error {
+  color: $color--error;
+}

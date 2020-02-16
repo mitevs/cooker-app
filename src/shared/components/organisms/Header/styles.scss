@@ -1,0 +1,19 @@
+@import 'vars';
+
+.container {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+
+.header {
+  background: $color--gray;
+  border: 1px solid $color--grayDark1;
+  color: $color--grayDark;
+}

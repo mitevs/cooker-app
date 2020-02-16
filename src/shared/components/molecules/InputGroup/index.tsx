@@ -1,11 +1,13 @@
-import React from 'react'
-import { StyledInputGroup } from './styles/InputGroup'
-import { StyledSign } from './styles/Sign'
+import React, { FC } from 'react'
+import useStyles from 'isomorphic-style-loader/useStyles'
+import styles from './styles.scss'
 
-const InputGroup: React.FC & { Sign: React.ComponentType } = ({ children }) => {
-  return <StyledInputGroup>{children}</StyledInputGroup>
+export const Sign: FC = ({ children }) => {
+  useStyles(styles)
+  return <span className={styles.sign}>{children}</span>
 }
 
-InputGroup.Sign = StyledSign
-
-export { InputGroup }
+export const InputGroup: FC = ({ children }) => {
+  useStyles(styles)
+  return <div className={styles.inputGroup}>{children}</div>
+}

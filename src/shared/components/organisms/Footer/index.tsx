@@ -1,5 +1,3 @@
-import React from 'react'
+import React, { FC } from 'react'
 
-const Footer: React.FC = () => <footer>footer</footer>
-
-export { Footer }
+export const Footer: FC = () => <footer>footer</footer>

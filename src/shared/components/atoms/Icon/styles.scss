@@ -1,0 +1,31 @@
+@import 'vars';
+
+.icon {
+  display: inline-block;
+  position: relative;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.small {
+  svg {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+.big {
+  svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.pointer {
+  &:hover svg {
+    cursor: pointer;
+  }
+}

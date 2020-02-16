@@ -1,0 +1,35 @@
+@import 'vars';
+
+.button {
+  border-radius: 3px;
+  padding: 10px;
+  text-decoration: none;
+  display: inline-block;
+  color: $color--white;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+  outline: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.primary {
+  border: 1px solid darken($color--primary, 5%);
+  background: $color--primary;
+
+  &:hover {
+    border: 1px solid darken($color--primary, 10%);
+    background: darken($color--primary, 5%);
+  }
+
+  // &:disabled {
+  //   border: 1px solid darken($primaryDisabledColor, 5%);
+  //   background: $primaryDisabledColor;
+  // }
+}
