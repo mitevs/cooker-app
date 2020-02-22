@@ -13,9 +13,11 @@ import config from '@shared/config'
 import { ME } from '@shared/graphql/queries/users'
 import routes from '@server/routes'
 import client from '@server/graphql/client'
+import cors from 'koa-cors'
 
 const app = new Koa()
 
+app.use(cors())
 app.use(cookie())
 app.use(
   compress({

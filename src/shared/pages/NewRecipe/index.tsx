@@ -7,6 +7,7 @@ import { Default } from '@shared/templates/Default'
 import { INGREDIENTS } from '@shared/graphql/queries/ingredients'
 import { GET_RECIPES } from '@shared/graphql/queries/recipes'
 import { CREATE_RECIPE } from '@shared/graphql/mutations/recipes'
+import { CREATE_ASSET } from '@shared/graphql/mutations/assets'
 import {
   TwoColumn,
   LeftColumn,
@@ -65,20 +66,36 @@ const NewRecipe: React.FC = () => {
   })
 
   const [createRecipe] = useMutation(CREATE_RECIPE)
+  const [createAsset] = useMutation(CREATE_ASSET)
 
   const onSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault()
 
     try {
-      await createRecipe({
+      const { data: recipeResponse } = await createRecipe({
         variables: { ...newRecipe, ingredients: [], steps: [] },
       })
 
-      // upload image
+      // upload image: Create Gallery component
       if (image) {
         const data = new FormData()
         data.append('file', image)
-        console.log(await axios.post('http://localhost:8080/files', data))
+
+        const { data: fileResponse } = await axios.post(
+          'http://localhost:8080/api/v1/files',
+          data
+        )
+
+        // create asset
+        const { data: assetResponse } = await createAsset({
+          variables: {
+            name: fileResponse.name,
+            url: fileResponse.path,
+            type: fileResponse.type,
+            meta: 'main',
+            recipeId: recipeResponse.createRecipe.id,
+          },
+        })
       }
 
       setShouldRedirect(true)

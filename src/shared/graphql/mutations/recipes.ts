@@ -1,7 +1,7 @@
 import { gql } from 'apollo-boost'
 
 export const CREATE_RECIPE = gql`
-  mutation createRecipe(
+  mutation CreateRecipe(
     $title: String!
     $excerpt: String!
     $servings: Int!
