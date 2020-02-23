@@ -1,0 +1,25 @@
+.mediaBay__files {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin: -5px;
+}
+
+.mediaBay__file {
+  margin: 5px;
+  cursor: pointer;
+
+  img {
+    display: block;
+    width: 320px;
+    height: 220px;
+    object-fit: cover;
+  }
+
+  &--selected {
+    border: 3px solid red;
+    margin: 2px;
+  }
+}

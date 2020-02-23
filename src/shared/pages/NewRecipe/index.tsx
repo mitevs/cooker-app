@@ -5,9 +5,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks'
 import { Context } from '@shared/AppContext'
 import { Default } from '@shared/templates/Default'
 import { INGREDIENTS } from '@shared/graphql/queries/ingredients'
-import { GET_RECIPES } from '@shared/graphql/queries/recipes'
 import { CREATE_RECIPE } from '@shared/graphql/mutations/recipes'
-import { CREATE_ASSET } from '@shared/graphql/mutations/assets'
 import {
   TwoColumn,
   LeftColumn,
@@ -20,6 +18,11 @@ import { Button } from '@shared/components/atoms/Button'
 import { InputGroup } from '@shared/components/molecules/InputGroup'
 import { Input } from '@shared/components/atoms/Input'
 import { ImageInput } from '@shared/components/molecules/ImageInput'
+import { Modal } from '@shared/components/containers/Modal'
+
+import Loadable from 'react-loadable'
+import Loading from '@shared/components/containers/Loading'
+import { MediaBayProps } from '@shared/components/organisms/MediaBay'
 
 interface RecipeIngredientIn {
   ingredientId: number
@@ -31,6 +34,13 @@ interface StepIn {
   group?: string
 }
 
+interface AssetIn {
+  name: string
+  url: string
+  type: string
+  meta?: string
+}
+
 interface RecipeIn {
   title: string
   excerpt: string
@@ -39,6 +49,7 @@ interface RecipeIn {
   authorId: string
   ingredients: RecipeIngredientIn[]
   steps: StepIn[]
+  assets: AssetIn[]
 }
 
 const renderIngredients = (ingredients: Ingredient[]): React.ReactElement => (
@@ -63,10 +74,11 @@ const NewRecipe: React.FC = () => {
     authorId: user.id,
     ingredients: [{ ingredientId: 0, quantity: 0 }],
     steps: [{ text: '' }],
+    assets: [],
   })
 
+  // REmove asset mutation, only create recipe mutation needed
   const [createRecipe] = useMutation(CREATE_RECIPE)
-  const [createAsset] = useMutation(CREATE_ASSET)
 
   const onSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault()
@@ -85,17 +97,6 @@ const NewRecipe: React.FC = () => {
           'http://localhost:8080/api/v1/files',
           data
         )
-
-        // create asset
-        const { data: assetResponse } = await createAsset({
-          variables: {
-            name: fileResponse.name,
-            url: fileResponse.path,
-            type: fileResponse.type,
-            meta: 'main',
-            recipeId: recipeResponse.createRecipe.id,
-          },
-        })
       }
 
       setShouldRedirect(true)
@@ -209,12 +210,36 @@ const NewRecipe: React.FC = () => {
     setImage(file)
   }
 
+  // load dynamically
+  const MediaBay = Loadable({
+    loader: () =>
+      import(
+        /* webpackChunkName: "media-bay" */
+        '@shared/components/organisms/MediaBay'
+      ),
+    loading: Loading,
+    render(loaded, props: MediaBayProps) {
+      const Component = loaded.MediaBay
+      return <Component {...props} />
+    },
+  })
+
   return (
     <Default>
       <Heading>New Recipe</Heading>
+
+      <Modal heading="Media Bay" isOpen={true}>
+        <MediaBay
+          isSingleSelect={true}
+          onSelect={(files) => console.log(files)}
+        />
+      </Modal>
+
       <form onSubmit={onSubmit}>
         <TwoColumn>
           <LeftColumn>
+            {/* replace with gallery picker that will get file type and path */}
+            {/* the upload should be done in the gallery component */}
             <ImageInput onFileSelect={handleFileSelect} />
           </LeftColumn>
           <RightColumn>

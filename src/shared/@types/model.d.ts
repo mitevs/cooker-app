@@ -9,6 +9,13 @@ declare interface User extends Base {
   username: string
   password?: string
   shortBio: string
+  files: MediaFile[]
+}
+
+declare interface MediaFile extends Base {
+  name: string
+  type: string
+  path: string
 }
 
 declare interface Ingredient {
@@ -21,6 +28,7 @@ declare interface Asset extends Base {
   name: string
   type: string
   url: string
+  meta?: string
 }
 
 declare interface Step extends Base {

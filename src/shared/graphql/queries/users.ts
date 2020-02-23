@@ -9,6 +9,14 @@ export const ME = gql`
       email
       username
       shortBio
+      files {
+        id
+        createdOn
+        modifiedOn
+        name
+        type
+        path
+      }
     }
   }
 `

@@ -9,6 +9,7 @@ export const CREATE_RECIPE = gql`
     $authorId: ID!
     $ingredients: [RecipeIngredientInput!]!
     $steps: [StepInput!]!
+    $assets: [AssetInput!]
   ) {
     createRecipe(
       recipe: {
@@ -19,6 +20,7 @@ export const CREATE_RECIPE = gql`
         authorId: $authorId
         ingredients: $ingredients
         steps: $steps
+        assets: $assets
       }
     ) {
       id

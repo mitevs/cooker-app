@@ -1,12 +1,11 @@
 @import 'vars';
 
 .button {
+  border: 1px solid $color--grayDark1;
   border-radius: 3px;
   padding: 10px;
   text-decoration: none;
   display: inline-block;
-  color: $color--white;
-  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
   font-weight: bold;
   outline: none;
 
@@ -22,6 +21,7 @@
 .primary {
   border: 1px solid darken($color--primary, 5%);
   background: $color--primary;
+  color: $color--white;
 
   &:hover {
     border: 1px solid darken($color--primary, 10%);
