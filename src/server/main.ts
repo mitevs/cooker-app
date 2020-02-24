@@ -52,6 +52,7 @@ app.use(async (ctx, next) => {
     })
 
     ctx.state.user = res2.data.me
+    ctx.state.token = authToken
   }
 
   await next()

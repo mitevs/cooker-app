@@ -4,6 +4,7 @@ declare interface Window {
     // maybe define global app state type?
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     STATE: any
+    TOKEN?: string
   }
 }
 

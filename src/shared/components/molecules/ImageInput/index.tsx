@@ -6,7 +6,7 @@ export interface ImageInputProps extends InputHTMLAttributes<HTMLInputElement> {
   width?: number
   height?: number
   crop?: boolean
-  onFileSelect?: (file: File) => void
+  onFilesSelect?: (files: File[]) => void
 }
 
 const placeholderURL =
@@ -16,42 +16,60 @@ export const ImageInput: FC<ImageInputProps> = ({
   width = 480,
   height = 320,
   className,
-  onFileSelect,
+  onFilesSelect,
 }) => {
   useStyles(styles)
 
-  const reader = new FileReader()
   const inputRef = createRef<HTMLInputElement>()
-  const [imgSrc, setImgSrc] = useState(placeholderURL)
-
-  reader.onload = function(e: any) {
-    setImgSrc(e.target.result)
-  }
+  const [images, setImages] = useState<string>([])
 
   const handleFileChange = (files: FileList | null): void => {
     if (files) {
-      // check file type
+      let index = 0
+      const reader = new FileReader()
+      const readImages: any[] = []
 
-      const file = files[0]
-      reader.readAsDataURL(file)
+      reader.onload = () => {
+        readImages.push(reader.result)
 
-      if (onFileSelect) {
-        onFileSelect(file)
+        if (index < files.length) {
+          reader.readAsDataURL(files[index++])
+        } else {
+          setImages(readImages)
+        }
       }
+
+      reader.readAsDataURL(files[index++])
     }
   }
 
   return (
-    <div
-      className={className}
-      onClick={() => inputRef.current && inputRef.current.click()}>
-      <img className={styles.img} width={width} height={height} src={imgSrc} />
+    <div className={className}>
+      {images.map((image, i) => (
+        <img
+          key={i}
+          className={styles.img}
+          width={width}
+          height={height}
+          src={image}
+        />
+      ))}
+
+      <img
+        onClick={() => inputRef.current && inputRef.current.click()}
+        className={styles.img}
+        width={width}
+        height={height}
+        src={placeholderURL}
+      />
+
       <input
         ref={inputRef}
         style={{ display: 'none' }}
         type="file"
         onChange={({ target: { files } }) => handleFileChange(files)}
         accept="image/*"
+        multiple
       />
     </div>
   )

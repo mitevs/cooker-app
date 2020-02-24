@@ -38,7 +38,7 @@
 }
 
 .modal__footer {
-  padding: $spacing--md;
+  padding: $spacing--base $spacing--md;
   background: $color--gray;
   border-top: 1px solid $color--grayDark1;
   text-align: right;

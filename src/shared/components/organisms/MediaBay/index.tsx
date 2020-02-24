@@ -1,9 +1,9 @@
 import React, { FC, useContext, useState } from 'react'
-import axios from 'axios'
 import clsx from 'clsx'
 import { Context } from '@shared/AppContext'
 import useStyles from 'isomorphic-style-loader/useStyles'
 import styles from './styles.scss'
+import { http } from '@client/http/client'
 
 import { ImageInput } from '@shared/components/molecules/ImageInput'
 
@@ -51,10 +51,7 @@ export const MediaBay: FC<MediaBayProps> = ({
     const formData = new FormData()
     formData.append('file', file)
 
-    const { data } = await axios.post(
-      'http://localhost:8080/api/v1/files',
-      formData
-    )
+    const { data } = await http.post('files', formData)
 
     // update component
   }
@@ -77,9 +74,7 @@ export const MediaBay: FC<MediaBayProps> = ({
           </li>
         ))}
         <li className={styles['mediaBay__file']}>
-          {/* <img src="https://via.placeholder.com/320x213.png?text=Upload" /> */}
-
-          <ImageInput onFileSelect={handleFileSelect} />
+          <ImageInput />
         </li>
       </ul>
     </div>

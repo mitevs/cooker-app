@@ -28,7 +28,8 @@
     <script>
         window.APP = {
             <% if (typeof user !== 'undefined') { %>USER: <%- JSON.stringify(user) %>,<% } %>
-            STATE: <%- JSON.stringify(state) %>
+            STATE: <%- JSON.stringify(state) %>,
+            <% if (typeof token !== 'undefined') { %> TOKEN: '<%- token %>' <% } %>
         };
     </script>
     <script type="text/javascript" src="<%= `${cdnUrl}/vendor.js` %>"></script>
