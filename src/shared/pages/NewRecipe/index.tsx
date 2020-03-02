@@ -1,4 +1,10 @@
-import React, { useState, useContext, FormEvent, ChangeEvent } from 'react'
+import React, {
+  useState,
+  useContext,
+  FormEvent,
+  ChangeEvent,
+  useCallback,
+} from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router'
 import { useQuery, useMutation } from '@apollo/react-hooks'
@@ -60,6 +66,23 @@ const renderIngredients = (ingredients: Ingredient[]): React.ReactElement => (
   </div>
 )
 
+const placeholderURL =
+  'https://via.placeholder.com/480x320.png?text=Click+To+Upload+Image'
+
+// load dynamically
+const MediaBay = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "media-bay" */
+      '@shared/components/organisms/MediaBay'
+    ),
+  loading: Loading,
+  render(loaded, props: MediaBayProps) {
+    const Component = loaded.MediaBay
+    return <Component {...props} />
+  },
+})
+
 const NewRecipe: React.FC = () => {
   const { user } = useContext(Context)
   const [shouldRedirect, setShouldRedirect] = useState(false)
@@ -79,8 +102,11 @@ const NewRecipe: React.FC = () => {
 
   // REmove asset mutation, only create recipe mutation needed
   const [createRecipe] = useMutation(CREATE_RECIPE)
+  const [openMediaBay, setOpenMediaBay] = useState(false)
+  const [selectedFiles, setSelectedFiles] = useState<MediaFile[]>([])
+  const [mainImage, setMainImage] = useState<MediaFile | null>(null)
 
-  const onSubmit = async (e: FormEvent): Promise<void> => {
+  const onSubmit = useCallback(async (e: FormEvent): Promise<void> => {
     e.preventDefault()
 
     try {
@@ -88,34 +114,24 @@ const NewRecipe: React.FC = () => {
         variables: { ...newRecipe, ingredients: [], steps: [] },
       })
 
-      // upload image: Create Gallery component
-      if (image) {
-        const data = new FormData()
-        data.append('file', image)
-
-        const { data: fileResponse } = await axios.post(
-          'http://localhost:8080/api/v1/files',
-          data
-        )
-      }
-
       setShouldRedirect(true)
     } catch (err) {
       console.log(err)
     }
-  }
+  }, [])
 
   const renderIngredientsSection = (): React.ReactElement => {
     return <Heading level="h2">Ingredients</Heading>
   }
 
-  const onChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ): void => {
-    const { name, value } = e.target
-    // validateField(name, value);
-    setNewRecipe((prev) => ({ ...prev, [name]: value }))
-  }
+  const onChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
+      const { name, value } = e.target
+      // validateField(name, value);
+      setNewRecipe((prev) => ({ ...prev, [name]: value }))
+    },
+    []
+  )
 
   if (shouldRedirect) {
     return <Redirect to="/recipes" />
@@ -127,22 +143,22 @@ const NewRecipe: React.FC = () => {
     return <div>loading...</div>
   }
 
-  const onStepChange = (index, text): void => {
+  const onStepChange = useCallback((index, text): void => {
     const steps = newRecipe.steps
     steps[index].text = text
     setNewRecipe({ ...newRecipe, steps })
-  }
+  }, [])
 
-  const addStep = (): void => {
+  const addStep = useCallback((): void => {
     setNewRecipe({ ...newRecipe, steps: [...newRecipe.steps, { text: '' }] })
-  }
+  }, [])
 
-  const addIngredient = (): void => {
+  const addIngredient = useCallback((): void => {
     setNewRecipe({
       ...newRecipe,
       ingredients: [...newRecipe.ingredients, { ingredientId: 0, quantity: 0 }],
     })
-  }
+  }, [])
 
   const stepForm = (): React.ReactElement => {
     return (
@@ -161,11 +177,11 @@ const NewRecipe: React.FC = () => {
     )
   }
 
-  const onIngredientChange = (index, value, fieldName) => {
+  const onIngredientChange = useCallback((index, value, fieldName) => {
     const ingredients = newRecipe.ingredients
     ingredients[index][fieldName] = value
     setNewRecipe({ ...newRecipe, ingredients })
-  }
+  }, [])
 
   const renderIngredientItem = (ingredient: Ingredient): React.ReactElement => {
     return <div key={ingredient.id}></div>
@@ -210,37 +226,47 @@ const NewRecipe: React.FC = () => {
     setImage(file)
   }
 
-  // load dynamically
-  const MediaBay = Loadable({
-    loader: () =>
-      import(
-        /* webpackChunkName: "media-bay" */
-        '@shared/components/organisms/MediaBay'
-      ),
-    loading: Loading,
-    render(loaded, props: MediaBayProps) {
-      const Component = loaded.MediaBay
-      return <Component {...props} />
-    },
-  })
+  const onClose = useCallback(() => setOpenMediaBay(false), [])
+
+  const onSave = useCallback(() => {
+    if (selectedFiles.length) {
+      setMainImage(selectedFiles[0])
+    }
+
+    setOpenMediaBay(false)
+  }, [selectedFiles])
+
+  const onSelect = useCallback((files) => {
+    if (files.length) {
+      setSelectedFiles([...files])
+    }
+  }, [])
 
   return (
     <Default>
       <Heading>New Recipe</Heading>
 
-      <Modal heading="Media Bay" isOpen={true}>
-        <MediaBay
-          isSingleSelect={true}
-          onSelect={(files) => console.log(files)}
-        />
+      <Modal
+        heading="Media Bay"
+        isOpen={openMediaBay}
+        onClose={onClose}
+        onSave={onSave}>
+        <MediaBay isSingleSelect={true} onSelect={onSelect} />
       </Modal>
 
       <form onSubmit={onSubmit}>
         <TwoColumn>
           <LeftColumn>
-            {/* replace with gallery picker that will get file type and path */}
-            {/* the upload should be done in the gallery component */}
-            <ImageInput onFileSelect={handleFileSelect} />
+            <img
+              width="480"
+              height="320"
+              src={
+                mainImage
+                  ? `http://localhost:8080${mainImage.path}`
+                  : placeholderURL
+              }
+              onClick={() => setOpenMediaBay(true)}
+            />
           </LeftColumn>
           <RightColumn>
             <FormControl

@@ -9,22 +9,21 @@ import { Button } from '@shared/components/atoms/Button'
 export interface ModalProps {
   heading?: string
   isOpen?: boolean
+  onClose?: Function
+  onSave?: Function
 }
 
 export const Modal: FC<ModalProps> = ({
   heading = 'Modal',
   isOpen = false,
+  onClose,
+  onSave,
   children,
 }) => {
   useStyles(styles)
-  const [open, setOpen] = useState(isOpen)
-
-  useEffect(() => {
-    setOpen(isOpen)
-  }, [isOpen])
 
   return (
-    <div className={clsx(styles.modal, { [styles['modal--open']]: open })}>
+    <div className={clsx(styles.modal, { [styles['modal--open']]: isOpen })}>
       <div className={styles.modal__inner}>
         <div className={styles.modal__headline}>
           <Heading level="h3" className={styles.modal__heading}>
@@ -33,8 +32,10 @@ export const Modal: FC<ModalProps> = ({
         </div>
         <div className={styles.modal__body}>{children}</div>
         <div className={styles.modal__footer}>
-          <Button>Close</Button>
-          <Button buttonStyle="primary">Save</Button>
+          <Button onClick={() => onClose && onClose()}>Close</Button>
+          <Button onClick={() => onSave && onSave()} buttonStyle="primary">
+            Save
+          </Button>
         </div>
       </div>
     </div>

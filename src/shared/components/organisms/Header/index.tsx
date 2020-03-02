@@ -1,11 +1,11 @@
-import React, { FC, useContext } from 'react'
+import React, { FC, useContext, memo } from 'react'
 import { Context } from '@shared/AppContext'
 import { Nav } from '@shared/components/molecules/Nav'
 import { Link } from '@shared/components/atoms/Link'
 import useStyles from 'isomorphic-style-loader/useStyles'
 import styles from './styles.scss'
 
-export const Header: FC = () => {
+const HeaderIn: FC = () => {
   useStyles(styles)
   const { user } = useContext(Context)
 
@@ -28,3 +28,5 @@ export const Header: FC = () => {
     </div>
   )
 }
+
+export const Header = memo(HeaderIn)

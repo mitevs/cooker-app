@@ -1,15 +1,20 @@
-import React, { FC, useContext, useState } from 'react'
+import { http } from '@client/http/client'
+import React, {
+  FC,
+  useContext,
+  useState,
+  createRef,
+  useEffect,
+  useCallback,
+} from 'react'
 import clsx from 'clsx'
 import { Context } from '@shared/AppContext'
 import useStyles from 'isomorphic-style-loader/useStyles'
 import styles from './styles.scss'
-import { http } from '@client/http/client'
-
-import { ImageInput } from '@shared/components/molecules/ImageInput'
 
 export interface MediaBayProps {
   isSingleSelect?: boolean
-  onSelect?: (file: MediaFile[] | MediaFile) => void
+  onSelect?: (file: MediaFile[]) => void
 }
 
 export const MediaBay: FC<MediaBayProps> = ({
@@ -17,54 +22,110 @@ export const MediaBay: FC<MediaBayProps> = ({
   onSelect,
 }) => {
   useStyles(styles)
+
+  const reader = new FileReader()
+  const inputRef = createRef<HTMLInputElement>()
   const { user } = useContext(Context)
 
-  const [selected, setSelected] = useState<MediaFile[]>([])
+  const [mediaFiles, setMediaFiles] = useState<MediaFile[]>(user?.files ?? [])
+  const [selectedMediaFiles, setSelectedMediaFiles] = useState<MediaFile[]>([])
 
-  const selectFile = (file: MediaFile): void => {
-    const foundFile = selected.find((f) => f.id === file.id)
+  // selected files to upload
+  const [uploadFiles, setUploadFiles] = useState<File[]>([])
+
+  // preview for the selected files to upload
+  const [uploadFilesPreview, setUploadFilesPreview] = useState<string[]>([])
+
+  const selectFile = useCallback((file: MediaFile): void => {
+    const foundFile = selectedMediaFiles.find(({ id }) => id === file.id)
+
+    let files: MediaFile[] = []
 
     if (isSingleSelect) {
-      if (foundFile) {
-        setSelected([])
-      } else {
-        setSelected([file])
+      if (!foundFile) {
+        files.push(file)
       }
     } else {
-      const newFiles = [...selected]
+      files = [...selectedMediaFiles]
 
       if (foundFile) {
-        newFiles.splice(newFiles.indexOf(foundFile), 1)
+        files.splice(files.indexOf(foundFile), 1)
       } else {
-        newFiles.push(file)
+        files.push(file)
       }
-
-      setSelected(newFiles)
     }
 
     if (onSelect) {
-      onSelect(selected)
+      onSelect(files)
+    }
+
+    setSelectedMediaFiles(files)
+  }, [])
+
+  const doUpload = async (files) => {
+    const formData = new FormData()
+
+    files.forEach((file) => {
+      formData.append('file', file)
+    })
+
+    const { data } = await http.post('files', formData, {
+      onUploadProgress: (event) => {
+        console.log(event.loaded)
+        console.log(event.total)
+      },
+    })
+
+    // cleanup
+    setUploadFiles([])
+    setUploadFilesPreview([])
+
+    // set newly uploaded files
+    setMediaFiles([...mediaFiles, ...data])
+  }
+
+  useEffect(() => {
+    if (uploadFiles.length) {
+      doUpload(uploadFiles)
+    }
+  }, [uploadFiles])
+
+  // Gets preview of the files and triggers the upload
+  const handleFilesChange = (files: FileList | null): void => {
+    if (files) {
+      let index = 0
+      const filesArr = Array.from(files)
+      const readImages: any[] = []
+
+      reader.onload = () => {
+        readImages.push(reader.result)
+
+        if (index < files.length) {
+          reader.readAsDataURL(files[index++])
+        } else {
+          setUploadFilesPreview(readImages)
+          setUploadFiles(filesArr)
+        }
+      }
+
+      reader.readAsDataURL(files[index++])
     }
   }
 
-  const handleFileSelect = async (file: File): Promise<void> => {
-    const formData = new FormData()
-    formData.append('file', file)
-
-    const { data } = await http.post('files', formData)
-
-    // update component
-  }
+  const onFilesChange = useCallback(
+    ({ target: { files } }) => handleFilesChange(files),
+    []
+  )
 
   return (
     <div>
       <ul className={styles['mediaBay__files']}>
-        {user?.files.map((file) => (
+        {mediaFiles.map((file) => (
           <li
             key={file.id}
             className={clsx(styles['mediaBay__file'], {
-              [styles['mediaBay__file--selected']]: selected.find(
-                (f) => f.id === file.id
+              [styles['mediaBay__file--selected']]: selectedMediaFiles.includes(
+                file
               ),
             })}>
             <img
@@ -73,8 +134,19 @@ export const MediaBay: FC<MediaBayProps> = ({
             />
           </li>
         ))}
+        {uploadFilesPreview.map((src, i) => (
+          <li key={i} className={styles['mediaBay__file']}>
+            <img src={src} />
+          </li>
+        ))}
         <li className={styles['mediaBay__file']}>
-          <ImageInput />
+          <input
+            ref={inputRef}
+            type="file"
+            onChange={onFilesChange}
+            accept="image/*"
+            multiple
+          />
         </li>
       </ul>
     </div>
