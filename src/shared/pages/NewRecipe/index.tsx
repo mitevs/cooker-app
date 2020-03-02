@@ -1,75 +1,64 @@
 import React, {
-  useState,
+  FC,
   useContext,
-  FormEvent,
-  ChangeEvent,
+  useState,
   useCallback,
+  ChangeEvent,
 } from 'react'
-import axios from 'axios'
-import { Redirect } from 'react-router'
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import Loadable from 'react-loadable'
 import { Context } from '@shared/AppContext'
 import { Default } from '@shared/templates/Default'
-import { INGREDIENTS } from '@shared/graphql/queries/ingredients'
-import { CREATE_RECIPE } from '@shared/graphql/mutations/recipes'
+
 import {
   TwoColumn,
   LeftColumn,
   RightColumn,
 } from '@shared/components/containers/TwoColumn'
-import { Heading } from '@shared/components/atoms/Heading'
-import { TimeControl } from '@shared/components/organisms/TimeControl'
-import { FormControl } from '@shared/components/molecules/FormControl'
-import { Button } from '@shared/components/atoms/Button'
-import { InputGroup } from '@shared/components/molecules/InputGroup'
-import { Input } from '@shared/components/atoms/Input'
-import { ImageInput } from '@shared/components/molecules/ImageInput'
+
 import { Modal } from '@shared/components/containers/Modal'
-
-import Loadable from 'react-loadable'
-import Loading from '@shared/components/containers/Loading'
+import { FormControl } from '@shared/components/molecules/FormControl'
 import { MediaBayProps } from '@shared/components/organisms/MediaBay'
-
-interface RecipeIngredientIn {
-  ingredientId: number
-  quantity: number
-}
-
-interface StepIn {
-  text: string
-  group?: string
-}
-
-interface AssetIn {
-  name: string
-  url: string
-  type: string
-  meta?: string
-}
-
-interface RecipeIn {
-  title: string
-  excerpt: string
-  servings: number
-  prepTime: number
-  authorId: string
-  ingredients: RecipeIngredientIn[]
-  steps: StepIn[]
-  assets: AssetIn[]
-}
-
-const renderIngredients = (ingredients: Ingredient[]): React.ReactElement => (
-  <div>
-    {ingredients.map((ingredient, index) => {
-      return <div key={index}>{ingredient.name}</div>
-    })}
-  </div>
-)
+import Loading from '@shared/components/containers/Loading'
 
 const placeholderURL =
   'https://via.placeholder.com/480x320.png?text=Click+To+Upload+Image'
 
-// load dynamically
+interface RecipeData {
+  title: string
+  excerpt: string
+  servings: number
+  prepTime: number
+  authorId?: string
+}
+
+// number of assets for each step (total steps: 6)
+const getNewAssets = (): Asset[] => {
+  const assets: Asset[] = []
+
+  for (let i = 0; i < 6; i++) {
+    assets.push({
+      name: '',
+      type: '',
+      url: '',
+      meta: `step_${i}`,
+    })
+  }
+
+  return assets
+}
+
+const getNewSteps = (): Step[] => {
+  const steps: Step[] = []
+
+  for (let i = 0; i < 6; i++) {
+    steps.push({
+      text: '',
+    })
+  }
+
+  return steps
+}
+
 const MediaBay = Loadable({
   loader: () =>
     import(
@@ -83,46 +72,24 @@ const MediaBay = Loadable({
   },
 })
 
-const NewRecipe: React.FC = () => {
+const NewRecipe: FC = () => {
   const { user } = useContext(Context)
-  const [shouldRedirect, setShouldRedirect] = useState(false)
 
-  const [image, setImage] = useState<Blob>()
+  const [openMediaBay, setOpenMediaBay] = useState(false)
+  const [currentStep, setCurrentStep] = useState(0)
+  const [selectedFile, setSelectedFle] = useState<MediaFile | null>(null)
 
-  const [newRecipe, setNewRecipe] = useState<RecipeIn>({
+  const [newRecipe, setNewRecipe] = useState<RecipeData>({
     title: '',
     excerpt: '',
     servings: 0,
     prepTime: 0,
-    authorId: user.id,
-    ingredients: [{ ingredientId: 0, quantity: 0 }],
-    steps: [{ text: '' }],
-    assets: [],
+    authorId: user?.id,
   })
 
-  // REmove asset mutation, only create recipe mutation needed
-  const [createRecipe] = useMutation(CREATE_RECIPE)
-  const [openMediaBay, setOpenMediaBay] = useState(false)
-  const [selectedFiles, setSelectedFiles] = useState<MediaFile[]>([])
-  const [mainImage, setMainImage] = useState<MediaFile | null>(null)
-
-  const onSubmit = useCallback(async (e: FormEvent): Promise<void> => {
-    e.preventDefault()
-
-    try {
-      const { data: recipeResponse } = await createRecipe({
-        variables: { ...newRecipe, ingredients: [], steps: [] },
-      })
-
-      setShouldRedirect(true)
-    } catch (err) {
-      console.log(err)
-    }
-  }, [])
-
-  const renderIngredientsSection = (): React.ReactElement => {
-    return <Heading level="h2">Ingredients</Heading>
-  }
+  const [steps, setSteps] = useState<Step[]>(getNewSteps())
+  const [assets, setAssets] = useState<Asset[]>(getNewAssets())
+  const [ingredients, setIngredients] = useState<Asset[]>(getNewAssets())
 
   const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
@@ -133,119 +100,49 @@ const NewRecipe: React.FC = () => {
     []
   )
 
-  if (shouldRedirect) {
-    return <Redirect to="/recipes" />
+  const openModal = (step): void => {
+    setCurrentStep(step)
+    setOpenMediaBay(true)
   }
 
-  const { loading, data } = useQuery<{ ingredients: Ingredient[] }>(INGREDIENTS)
-
-  if (loading) {
-    return <div>loading...</div>
-  }
-
-  const onStepChange = useCallback((index, text): void => {
-    const steps = newRecipe.steps
-    steps[index].text = text
-    setNewRecipe({ ...newRecipe, steps })
-  }, [])
-
-  const addStep = useCallback((): void => {
-    setNewRecipe({ ...newRecipe, steps: [...newRecipe.steps, { text: '' }] })
-  }, [])
-
-  const addIngredient = useCallback((): void => {
-    setNewRecipe({
-      ...newRecipe,
-      ingredients: [...newRecipe.ingredients, { ingredientId: 0, quantity: 0 }],
-    })
-  }, [])
-
-  const stepForm = (): React.ReactElement => {
-    return (
-      <div>
-        <button onClick={addStep}>add step</button>
-
-        {newRecipe.steps.map((step, index) => (
-          <textarea
-            key={index}
-            value={step.text}
-            onChange={({ target: { value } }) =>
-              onStepChange(index, value)
-            }></textarea>
-        ))}
-      </div>
-    )
-  }
-
-  const onIngredientChange = useCallback((index, value, fieldName) => {
-    const ingredients = newRecipe.ingredients
-    ingredients[index][fieldName] = value
-    setNewRecipe({ ...newRecipe, ingredients })
-  }, [])
-
-  const renderIngredientItem = (ingredient: Ingredient): React.ReactElement => {
-    return <div key={ingredient.id}></div>
-  }
-
-  const ingredientForm = (): React.ReactElement | null => {
-    if (data) {
-      return (
-        <div>
-          <button onClick={addIngredient}>add ingredient</button>
-
-          {newRecipe.ingredients.map((ingredient, index) => (
-            <div key={index}>
-              <select
-                value={ingredient.ingredientId}
-                onChange={({ target: { value } }) =>
-                  onIngredientChange(index, value, 'ingredientId')
-                }>
-                <option value="0">Select...</option>
-                {data.ingredients.map((ing, index2) => (
-                  <option key={index2} value={ing.id}>
-                    {ing.name}
-                  </option>
-                ))}
-              </select>
-              <input
-                placeholder="Quantity"
-                onChange={({ target: { value } }) =>
-                  onIngredientChange(index, value, 'quantity')
-                }
-              />
-            </div>
-          ))}
-        </div>
-      )
-    }
-
-    return null
-  }
-
-  const handleFileSelect = (file: File): void => {
-    setImage(file)
-  }
-
-  const onClose = useCallback(() => setOpenMediaBay(false), [])
-
-  const onSave = useCallback(() => {
-    if (selectedFiles.length) {
-      setMainImage(selectedFiles[0])
-    }
-
+  const onClose = (): void => {
     setOpenMediaBay(false)
-  }, [selectedFiles])
+  }
 
-  const onSelect = useCallback((files) => {
-    if (files.length) {
-      setSelectedFiles([...files])
+  const onSave = (): void => {
+    if (selectedFile) {
+      const asset = assets[currentStep]
+
+      const newAsset = {
+        ...asset,
+        name: selectedFile.name,
+        url: selectedFile.path,
+        type: selectedFile.type,
+      }
+
+      const newAssets = [...assets]
+      newAssets.splice(currentStep, 1, newAsset)
+      setAssets(newAssets)
+      setOpenMediaBay(false)
     }
-  }, [])
+  }
+
+  const onSelect = (files: MediaFile[]): void => {
+    if (files.length) {
+      setSelectedFle(files[0])
+    }
+  }
+
+  const getAssetPath = (asset: Asset): string => {
+    if (asset.url) {
+      return `http://localhost:8080${asset.url}`
+    }
+
+    return placeholderURL
+  }
 
   return (
     <Default>
-      <Heading>New Recipe</Heading>
-
       <Modal
         heading="Media Bay"
         isOpen={openMediaBay}
@@ -254,19 +151,21 @@ const NewRecipe: React.FC = () => {
         <MediaBay isSingleSelect={true} onSelect={onSelect} />
       </Modal>
 
-      <form onSubmit={onSubmit}>
+      <form action="">
         <TwoColumn>
           <LeftColumn>
-            <img
-              width="480"
-              height="320"
-              src={
-                mainImage
-                  ? `http://localhost:8080${mainImage.path}`
-                  : placeholderURL
-              }
-              onClick={() => setOpenMediaBay(true)}
-            />
+            <ul>
+              {steps.map((step, i) => (
+                <li key={i}>
+                  <img
+                    width="480"
+                    height="320"
+                    src={getAssetPath(assets[i])}
+                    onClick={() => openModal(i)}
+                  />
+                </li>
+              ))}
+            </ul>
           </LeftColumn>
           <RightColumn>
             <FormControl
@@ -300,17 +199,6 @@ const NewRecipe: React.FC = () => {
             />
           </RightColumn>
         </TwoColumn>
-        <TwoColumn>
-          <LeftColumn>
-            <Heading level="h2">Preparation Steps</Heading>
-            {stepForm()}
-          </LeftColumn>
-          <RightColumn>{renderIngredientsSection()}</RightColumn>
-        </TwoColumn>
-
-        <Button type="submit" buttonStyle="primary">
-          Create
-        </Button>
       </form>
     </Default>
   )

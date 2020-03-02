@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect } from 'react'
 import clsx from 'clsx'
 import useStyles from 'isomorphic-style-loader/useStyles'
 import styles from './styles.scss'
@@ -21,6 +21,11 @@ export const Modal: FC<ModalProps> = ({
   children,
 }) => {
   useStyles(styles)
+
+  // use Portal to inject modal in root of body
+  useEffect(() => {
+    document.body.classList.toggle(styles.bodyModal, isOpen)
+  }, [isOpen])
 
   return (
     <div className={clsx(styles.modal, { [styles['modal--open']]: isOpen })}>

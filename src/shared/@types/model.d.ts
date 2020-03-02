@@ -1,7 +1,7 @@
 declare interface Base {
-  id: string
-  createdOn: Date
-  modifiedOn: Date
+  id?: string
+  createdOn?: Date
+  modifiedOn?: Date
 }
 
 declare interface User extends Base {
