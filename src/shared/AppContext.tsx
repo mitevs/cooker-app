@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Context = React.createContext<AppContext>({
-  user: null,
+export const AppContext = React.createContext<AppContext>({
+  user: {} as User,
   setUser: () => false,
 })

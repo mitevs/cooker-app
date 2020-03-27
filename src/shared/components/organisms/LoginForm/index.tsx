@@ -3,10 +3,10 @@ import React, { FC, useState, useContext, FormEvent } from 'react'
 import { Redirect } from 'react-router'
 import { FormControl } from '@shared/components/molecules/FormControl'
 import { Button } from '@shared/components/atoms/Button'
-import { Context } from '@shared/AppContext'
+import { AppContext } from '@shared/AppContext'
 
 const LoginForm: FC = () => {
-  const ctx = useContext<AppContext>(Context)
+  const ctx = useContext<AppContext>(AppContext)
 
   const [user, setUser] = useState({
     username: '',

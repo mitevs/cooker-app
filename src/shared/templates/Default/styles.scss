@@ -1,6 +1,9 @@
+@import 'vars';
+
 .main {
   max-width: 960px;
   width: 100%;
-  margin: 0 auto;
-  padding-top: 20px;
+  margin: 0 auto $spacing--lg;
+  min-height: calc(100vh - #{$header--height} - 2px - #{$footer--height});
+  box-sizing: border-box;
 }

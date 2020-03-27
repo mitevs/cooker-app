@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>React ExpressJS</title>
     <meta name="description" content="" />
@@ -18,28 +20,36 @@
     <meta name="distribution" content="global" />
     <meta name="Copyright" content="" />
     <meta name="theme-color" content="#0e5354" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <style><%= styles %></style>
-</head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      <%= styles %>
+    </style>
+  </head>
 
-<body>
+  <body>
+    <div id="modal-root"></div>
     <div id="app"><%- content%></div>
 
     <script>
-        window.APP = {
-            <% if (typeof user !== 'undefined') { %>USER: <%- JSON.stringify(user) %>,<% } %>
-            STATE: <%- JSON.stringify(state) %>,
-            <% if (typeof token !== 'undefined') { %> TOKEN: '<%- token %>' <% } %>
-        };
+      window.APP = {
+          <% if (typeof user !== 'undefined') { %>USER: <%- JSON.stringify(user) %>,<% } %>
+          STATE: <%- JSON.stringify(state) %>,
+          <% if (typeof token !== 'undefined') { %> TOKEN: '<%- token %>' <% } %>
+      };
     </script>
     <script type="text/javascript" src="<%= `${cdnUrl}/vendor.js` %>"></script>
     <script type="text/javascript" src="<%= `${cdnUrl}/commons.js` %>"></script>
 
     <% preloadedBundles.forEach(function(bundle) { %>
-        <script type="text/javascript" src="<%= `${cdnUrl}/${bundle.file}` %>"></script>
+    <script
+      type="text/javascript"
+      src="<%= `${cdnUrl}/${bundle.file}` %>"
+    ></script>
     <% }); %>
 
     <script type="text/javascript" src="<%= `${cdnUrl}/main.js` %>"></script>
-</body>
-
+  </body>
 </html>

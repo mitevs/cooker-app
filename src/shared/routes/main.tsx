@@ -1,5 +1,5 @@
 import Loadable from 'react-loadable'
-import Loading from '@shared/components/containers/Loading'
+import { Loading } from '@shared/components/containers/Loading'
 
 export default [
   {

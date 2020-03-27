@@ -3,7 +3,7 @@ import { ErrorBoundary } from './Error'
 import { renderRoutes } from 'react-router-config'
 import { Switch } from 'react-router-dom'
 import routes from './routes'
-import { Context } from './AppContext'
+import { AppContext } from './AppContext'
 import useStyles from 'isomorphic-style-loader/useStyles'
 import styles from '@shared/styles/global.scss'
 
@@ -17,11 +17,11 @@ const App: React.FC<AppProps> = ({ ctx }) => {
   const [user, setUser] = useState(ctx.user)
 
   return (
-    <Context.Provider value={{ user, setUser }}>
+    <AppContext.Provider value={{ user, setUser }}>
       <ErrorBoundary>
         <Switch>{renderRoutes(routes)}</Switch>
       </ErrorBoundary>
-    </Context.Provider>
+    </AppContext.Provider>
   )
 }
 

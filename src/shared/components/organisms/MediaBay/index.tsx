@@ -8,7 +8,7 @@ import React, {
   useCallback,
 } from 'react'
 import clsx from 'clsx'
-import { Context } from '@shared/AppContext'
+import { AppContext } from '@shared/AppContext'
 import useStyles from 'isomorphic-style-loader/useStyles'
 import styles from './styles.scss'
 
@@ -25,7 +25,7 @@ export const MediaBay: FC<MediaBayProps> = ({
 
   const reader = new FileReader()
   const inputRef = createRef<HTMLInputElement>()
-  const { user } = useContext(Context)
+  const { user } = useContext(AppContext)
 
   const [mediaFiles, setMediaFiles] = useState<MediaFile[]>(user?.files ?? [])
   const [selectedMediaFiles, setSelectedMediaFiles] = useState<MediaFile[]>([])

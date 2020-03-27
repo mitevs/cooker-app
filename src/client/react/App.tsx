@@ -5,9 +5,23 @@ import client from '@client/graphql/client'
 import App from '@shared/App'
 import StyleContext from 'isomorphic-style-loader/StyleContext'
 
+const css: any[] = []
+let insertedStyles: any[] = []
+let timer
+
 const insertCss = (...styles): Function => {
-  const removeCss = styles.map((style) => style._insertCss())
-  return () => removeCss.forEach((dispose) => dispose())
+  const removeCss = styles.map((style) => css.unshift(style))
+
+  if (timer) {
+    clearTimeout(timer)
+  }
+
+  timer = setTimeout(() => {
+    // inject all styles
+    insertedStyles = css.map((style) => style._insertCss())
+  }, 0)
+
+  return () => insertedStyles.forEach((dispose) => dispose())
 }
 
 const ClientApp: React.FC = () => (

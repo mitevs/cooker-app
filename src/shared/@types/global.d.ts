@@ -1,5 +1,5 @@
 declare interface AppContext {
-  user: User | null
+  user: User
   setUser: (user: User) => void
 }
 

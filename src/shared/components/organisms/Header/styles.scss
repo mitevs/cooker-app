@@ -14,6 +14,8 @@
 
 .header {
   background: $color--gray;
-  border: 1px solid $color--grayDark1;
+  border-bottom: 1px solid $color--grayDark1;
   color: $color--grayDark;
+  height: $header--height;
+  margin-bottom: $spacing--lg;
 }

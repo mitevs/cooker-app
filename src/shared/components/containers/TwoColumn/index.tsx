@@ -13,15 +13,26 @@ export const RightColumn: FC<HTMLAttributes<HTMLDivElement>> = ({
   ...props
 }) => <div {...props}>{children}</div>
 
-export const TwoColumn: FC<HTMLAttributes<HTMLDivElement>> = ({
+export interface TwoColumnProps extends HTMLAttributes<HTMLDivElement> {
+  layout?: 'expand-left' | 'expand-right'
+}
+
+export const TwoColumn: FC<TwoColumnProps> = ({
   children,
   className,
+  layout,
   ...props
 }) => {
   useStyles(styles)
 
   return (
-    <div className={clsx(styles.twoColumn, className)} {...props}>
+    <div
+      className={clsx(
+        styles.twoColumn,
+        className,
+        styles[`twoColumn--${layout}`]
+      )}
+      {...props}>
       {children}
     </div>
   )

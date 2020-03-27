@@ -1,5 +1,15 @@
+@import 'vars';
+
 .twoColumn {
   display: grid;
-  grid-column-gap: 15px;
+  grid-column-gap: $spacing--md;
   grid-template-columns: 1fr 1fr;
+}
+
+.twoColumn--expand-left {
+  grid-template-columns: 2fr 1fr;
+}
+
+.twoColumn--expand-right {
+  grid-template-columns: 1fr 2fr;
 }

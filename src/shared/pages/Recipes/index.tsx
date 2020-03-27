@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { Default } from '@shared/templates/Default'
 import { Link } from '@shared/components/atoms/Link'
 import { GET_RECIPES } from '@shared/graphql/queries/recipes'
-import { Context } from '@shared/AppContext'
+import { AppContext } from '@shared/AppContext'
 
 const renderRecipes = (recipes: Recipe[]): React.ReactElement => (
   <div>
@@ -19,7 +19,7 @@ const renderRecipes = (recipes: Recipe[]): React.ReactElement => (
 )
 
 const Recipes: React.FC = () => {
-  const { user } = useContext(Context)
+  const { user } = useContext(AppContext)
   const { loading, data } = useQuery(GET_RECIPES, {
     variables: { authorId: user && user.id },
   })

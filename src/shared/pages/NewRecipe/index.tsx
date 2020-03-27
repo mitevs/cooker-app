@@ -1,39 +1,29 @@
-import React, {
-  FC,
-  useContext,
-  useState,
-  useCallback,
-  ChangeEvent,
-} from 'react'
+import React, { FC, useContext, useState } from 'react'
+import useStyles from 'isomorphic-style-loader/useStyles'
 import Loadable from 'react-loadable'
-import { Context } from '@shared/AppContext'
+import { AppContext } from '@shared/AppContext'
 import { Default } from '@shared/templates/Default'
-
 import {
   TwoColumn,
   LeftColumn,
   RightColumn,
 } from '@shared/components/containers/TwoColumn'
 
+import { Button } from '@shared/components/atoms/Button'
+import { Input } from '@shared/components/atoms/Input'
+import { Text } from '@shared/components/atoms/Text'
 import { Modal } from '@shared/components/containers/Modal'
-import { FormControl } from '@shared/components/molecules/FormControl'
+import { StepInput } from '@shared/components/molecules/StepInput'
+import { Loading } from '@shared/components/containers/Loading'
 import { MediaBayProps } from '@shared/components/organisms/MediaBay'
-import Loading from '@shared/components/containers/Loading'
 
-const placeholderURL =
-  'https://via.placeholder.com/480x320.png?text=Click+To+Upload+Image'
-
-interface RecipeData {
-  title: string
-  excerpt: string
-  servings: number
-  prepTime: number
-  authorId?: string
-}
+import styles from './styles.scss'
+import { useInput } from '@shared/hooks/useInput'
+import { Grid, GridItem } from '@shared/components/containers/Grid'
 
 // number of assets for each step (total steps: 6)
-const getNewAssets = (): Asset[] => {
-  const assets: Asset[] = []
+const getNewAssets = (): AssetInput[] => {
+  const assets: AssetInput[] = []
 
   for (let i = 0; i < 6; i++) {
     assets.push({
@@ -47,17 +37,29 @@ const getNewAssets = (): Asset[] => {
   return assets
 }
 
-const getNewSteps = (): Step[] => {
-  const steps: Step[] = []
+const getNewSteps = (): StepInput[] => {
+  const steps: StepInput[] = []
 
   for (let i = 0; i < 6; i++) {
     steps.push({
+      title: '',
       text: '',
     })
   }
 
   return steps
 }
+
+const getNewRecipeInput = (user: User): RecipeInput => ({
+  title: '',
+  excerpt: '',
+  servings: 0,
+  prepTime: 0,
+  steps: getNewSteps(),
+  assets: getNewAssets(),
+  ingredients: [],
+  authorId: user.id,
+})
 
 const MediaBay = Loadable({
   loader: () =>
@@ -73,31 +75,20 @@ const MediaBay = Loadable({
 })
 
 const NewRecipe: FC = () => {
-  const { user } = useContext(Context)
+  useStyles(styles)
+
+  const { user } = useContext(AppContext)
+
+  const [title, setTitle] = useInput('')
+  const [excerpt, setExcerpt] = useInput('')
+  const [servings, setServings] = useInput()
+  const [prepTime, setPrepTime] = useInput()
 
   const [openMediaBay, setOpenMediaBay] = useState(false)
   const [currentStep, setCurrentStep] = useState(0)
   const [selectedFile, setSelectedFle] = useState<MediaFile | null>(null)
-
-  const [newRecipe, setNewRecipe] = useState<RecipeData>({
-    title: '',
-    excerpt: '',
-    servings: 0,
-    prepTime: 0,
-    authorId: user?.id,
-  })
-
-  const [steps, setSteps] = useState<Step[]>(getNewSteps())
-  const [assets, setAssets] = useState<Asset[]>(getNewAssets())
-  const [ingredients, setIngredients] = useState<Asset[]>(getNewAssets())
-
-  const onChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
-      const { name, value } = e.target
-      // validateField(name, value);
-      setNewRecipe((prev) => ({ ...prev, [name]: value }))
-    },
-    []
+  const [newRecipe, setNewRecipe] = useState<RecipeInput>(
+    getNewRecipeInput(user)
   )
 
   const openModal = (step): void => {
@@ -111,7 +102,7 @@ const NewRecipe: FC = () => {
 
   const onSave = (): void => {
     if (selectedFile) {
-      const asset = assets[currentStep]
+      const asset = newRecipe.assets[currentStep]
 
       const newAsset = {
         ...asset,
@@ -120,9 +111,11 @@ const NewRecipe: FC = () => {
         type: selectedFile.type,
       }
 
-      const newAssets = [...assets]
+      const newAssets = [...newRecipe.assets]
       newAssets.splice(currentStep, 1, newAsset)
-      setAssets(newAssets)
+
+      const updatedRecipe = { ...newRecipe, assets: newAssets }
+      setNewRecipe(updatedRecipe)
       setOpenMediaBay(false)
     }
   }
@@ -133,16 +126,87 @@ const NewRecipe: FC = () => {
     }
   }
 
-  const getAssetPath = (asset: Asset): string => {
+  const getAssetPath = (asset: AssetInput): string => {
     if (asset.url) {
       return `http://localhost:8080${asset.url}`
     }
 
-    return placeholderURL
+    return ''
+  }
+
+  const onStepChange = (step: StepInput, index: number): void => {
+    const stepToUpdate = newRecipe.steps[index]
+    const newSteps = [...newRecipe.steps]
+    newSteps.splice(index, 1, { ...stepToUpdate, ...step })
+    const updatedRecipe = { ...newRecipe, steps: newSteps }
+    setNewRecipe(updatedRecipe)
   }
 
   return (
-    <Default>
+    <Default className={styles.layout}>
+      <TwoColumn layout="expand-left" className={styles.twoColumn}>
+        <LeftColumn>
+          <Grid rows={2} cols={3}>
+            {newRecipe.steps.map((step, i) => (
+              <GridItem key={i}>
+                <StepInput
+                  key={i}
+                  order={i + 1}
+                  img={getAssetPath(newRecipe.assets[i])}
+                  onImageClick={() => openModal(i)}
+                  onChange={(step) => onStepChange(step, i)}
+                  className={styles.stepInput}
+                />
+              </GridItem>
+            ))}
+          </Grid>
+        </LeftColumn>
+
+        <RightColumn>
+          <Input
+            className={styles.recipeInput}
+            name="title"
+            value={title}
+            onChange={setTitle}
+            placeholder="Title..."
+          />
+
+          <Input
+            className={styles.recipeInput}
+            type="number"
+            name="servings"
+            value={servings}
+            onChange={setServings}
+            placeholder="Servings..."
+          />
+
+          <Input
+            className={styles.recipeInput}
+            type="number"
+            name="prepTime"
+            value={prepTime}
+            onChange={setPrepTime}
+            placeholder="Preparation time..."
+          />
+
+          <Text
+            className={styles.recipeExcerpt}
+            name="excerpt"
+            value={excerpt}
+            onChange={setExcerpt}
+            placeholder="Excerpt..."
+          />
+
+          <Button
+            buttonStyle="primary"
+            onClick={() =>
+              console.log({ ...newRecipe, title, excerpt, servings, prepTime })
+            }>
+            Create
+          </Button>
+        </RightColumn>
+      </TwoColumn>
+
       <Modal
         heading="Media Bay"
         isOpen={openMediaBay}
@@ -150,56 +214,6 @@ const NewRecipe: FC = () => {
         onSave={onSave}>
         <MediaBay isSingleSelect={true} onSelect={onSelect} />
       </Modal>
-
-      <form action="">
-        <TwoColumn>
-          <LeftColumn>
-            <ul>
-              {steps.map((step, i) => (
-                <li key={i}>
-                  <img
-                    width="480"
-                    height="320"
-                    src={getAssetPath(assets[i])}
-                    onClick={() => openModal(i)}
-                  />
-                </li>
-              ))}
-            </ul>
-          </LeftColumn>
-          <RightColumn>
-            <FormControl
-              label="Title"
-              name="title"
-              value={newRecipe.title}
-              onChange={onChange}
-            />
-
-            <FormControl
-              label="Excerpt"
-              name="excerpt"
-              value={newRecipe.excerpt}
-              onChange={onChange}
-            />
-
-            <FormControl
-              label="Servings"
-              name="servings"
-              type="number"
-              value={newRecipe.servings}
-              onChange={onChange}
-            />
-
-            <FormControl
-              label="Preparation Time"
-              name="prepTime"
-              type="number"
-              value={newRecipe.prepTime}
-              onChange={onChange}
-            />
-          </RightColumn>
-        </TwoColumn>
-      </form>
     </Default>
   )
 }

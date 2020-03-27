@@ -1,5 +1,8 @@
-import React, { FC, memo } from 'react'
+import React, { FC } from 'react'
+import useStyles from 'isomorphic-style-loader/useStyles'
+import styles from './styles.scss'
 
-const FooterIn: FC = () => <footer>footer</footer>
-
-export const Footer = memo(FooterIn)
+export const Footer: FC = () => {
+  useStyles(styles)
+  return <footer className={styles.footer}>footer</footer>
+}

@@ -1,0 +1,8 @@
+@import 'vars';
+
+.footer {
+  background: $color--gray;
+  border-top: 1px solid $color--grayDark1;
+  color: $color--grayDark;
+  height: $footer--height;
+}

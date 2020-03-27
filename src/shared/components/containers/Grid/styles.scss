@@ -1,0 +1,7 @@
+@import 'vars';
+
+.grid {
+  display: grid;
+  grid-column-gap: $spacing--md;
+  grid-row-gap: $spacing--md;
+}

@@ -1,8 +1,10 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC } from 'react'
+import { createPortal } from 'react-dom'
 import clsx from 'clsx'
 import useStyles from 'isomorphic-style-loader/useStyles'
 import styles from './styles.scss'
 
+import { useModal } from '@shared/hooks/useModal'
 import { Heading } from '@shared/components/atoms/Heading'
 import { Button } from '@shared/components/atoms/Button'
 
@@ -22,12 +24,9 @@ export const Modal: FC<ModalProps> = ({
 }) => {
   useStyles(styles)
 
-  // use Portal to inject modal in root of body
-  useEffect(() => {
-    document.body.classList.toggle(styles.bodyModal, isOpen)
-  }, [isOpen])
+  const target = useModal()
 
-  return (
+  return createPortal(
     <div className={clsx(styles.modal, { [styles['modal--open']]: isOpen })}>
       <div className={styles.modal__inner}>
         <div className={styles.modal__headline}>
@@ -43,6 +42,7 @@ export const Modal: FC<ModalProps> = ({
           </Button>
         </div>
       </div>
-    </div>
+    </div>,
+    target as Element
   )
 }
