@@ -1,6 +1,6 @@
 {
   "name": "cooker-app",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "scripts": {
     "start": "node dist/server",
     "build": "npm-run-all --parallel build:client build:server",

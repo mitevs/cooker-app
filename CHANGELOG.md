@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.1.2 (2020-08-19)
+
+
+### Bug Fixes
+
+* **button:** small change ([06c2a04](https://github.com/mitevs/cooker-app/commit/06c2a0446b6e3adae5afd89458357b3a5e094e22))
+
 ### 1.1.1 (2020-08-19)
 
 ## 1.1.0 (2020-08-19)
