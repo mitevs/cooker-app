@@ -1,6 +1,6 @@
 {
   "name": "cooker-app",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "scripts": {
     "start": "node dist/server",
     "build": "npm-run-all --parallel build:client build:server",
@@ -67,7 +67,7 @@
     "react-docgen-typescript-loader": "^3.3.0",
     "react-docgen-typescript-webpack-plugin": "^1.1.0",
     "source-map-explorer": "^2.0.1",
-    "standard-version": "^7.0.1",
+    "standard-version": "^9.0.0",
     "start-server-webpack-plugin": "^2.2.5",
     "styled-components-modifiers": "^1.2.5",
     "typescript": "^3.6.2",
