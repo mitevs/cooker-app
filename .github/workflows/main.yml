@@ -1,0 +1,36 @@
+# Name for the github action
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+# runs the jobs
+jobs:
+  build:
+    # runs on ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      # checkout to github
+      - uses: actions/checkout@v2
+
+      - name: Setup GIT
+        run: |
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config user.name "$GITHUB_ACTOR"
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
+      # Run yarn install to install project packages
+      - run: yarn install
+      # yarn build to build the project
+      - run: yarn release
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          tags: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
