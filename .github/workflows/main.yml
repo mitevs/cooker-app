@@ -34,3 +34,19 @@ jobs:
         with:
           tags: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
+        with:
+          # source_branch: '' # If blank, default: triggered branch
+          destination_branch: 'develop' # If blank, default: master
+          pr_title: 'Master to Develop Sync' # Title of pull request
+          pr_body: 'Sync done by @${{ secrets.GITHUB_ACTOR }}' # Full markdown support, requires pr_title to be set
+          # pr_template: '.github/PULL_REQUEST_TEMPLATE.md' # Path to pull request template, requires pr_title to be set, excludes pr_body
+          # pr_reviewer: 'wei,worker' # Comma-separated list (no spaces)
+          pr_assignee: ${{ secrets.GITHUB_ACTOR }} # Comma-separated list (no spaces)
+          # pr_label: 'auto-pr' # Comma-separated list (no spaces)
+          # pr_milestone: 'Milestone 1' # Milestone name
+          # pr_draft: true # Creates pull request as draft
+          # pr_allow_empty: true # Creates pull request even if there are no changes
+          github_token: ${{ secrets.GITHUB_TOKEN }}
