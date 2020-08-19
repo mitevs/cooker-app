@@ -16,7 +16,7 @@ const modifiers = {
     })}
 
     &:hover {
-      border: 1px solid ${darken(0.05, colors.buttons.primary)};
+      border: 2px solid ${darken(0.05, colors.buttons.primary)};
       ${linearGradient({
         colorStops: [
           `${lighten(0.05, colors.buttons.primary)} 0%`,
